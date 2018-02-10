@@ -24,7 +24,7 @@
         android:id="@+id/nameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/button2"
+        android:layout_above="@+id/rejectButton"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
@@ -35,7 +35,7 @@
         android:textSize="24sp" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/rejectButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -45,11 +45,11 @@
         android:text="Button" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/checkButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/button2"
-        android:layout_alignBottom="@+id/button2"
+        android:layout_alignBaseline="@+id/rejectButton"
+        android:layout_alignBottom="@+id/rejectButton"
         android:layout_alignEnd="@+id/profileImageView"
         android:layout_alignRight="@+id/profileImageView"
         android:text="Button" />
