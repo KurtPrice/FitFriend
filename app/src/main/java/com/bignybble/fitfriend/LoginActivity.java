@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+
 import android.widget.Button;
+
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -15,12 +17,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         loginButton = findViewById(R.id.loginButton);
-        loginButton.setOnClickListener(this);
+
     }
 
     @Override
     public void onClick(View v) {
         Intent startMatch = new Intent(this, MatchActivity.class);
         startActivity(startMatch);
+    }
+
+    public void launchNavigationBarActivity(View view) {
+        Intent intent = new Intent(this, NavigationDrawerActivity.class);
+        startActivity(intent);
     }
 }
