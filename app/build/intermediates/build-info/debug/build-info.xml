@@ -5,28 +5,43 @@
     build-mode="COLD"
     density="xxxhdpi"
     format="10"
-    ir-eligibility="COMPATIBLE"
+    ir-eligibility="R_CLASS_CHANGE"
     plugin-version="3.0.1"
-    timestamp="1518296399980"
+    timestamp="1518297290109"
     token="-7359164076258897661"
     verifier="COLD_SWAP_REQUESTED" >
 
     <task
         name="javac"
-        duration="148" />
+        duration="362" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="71" />
+        duration="23" />
     <task
         name="verifier"
-        duration="4" />
+        duration="17" />
 
+    <artifact
+        location="/home/pricek21/Desktop/FitFriend/app/build/intermediates/split-apk/debug/slices/slice_5.apk"
+        type="SPLIT" />
+    <artifact
+        location="/home/pricek21/Desktop/FitFriend/app/build/intermediates/split-apk/debug/slices/slice_9.apk"
+        type="SPLIT" />
+    <artifact
+        location="/home/pricek21/Desktop/FitFriend/app/build/intermediates/split-apk/debug/slices/slice_7.apk"
+        type="SPLIT" />
+    <artifact
+        location="/home/pricek21/Desktop/FitFriend/app/build/intermediates/split-apk/debug/slices/slice_4.apk"
+        type="SPLIT" />
     <artifact
         location="/home/pricek21/Desktop/FitFriend/app/build/intermediates/split-apk/debug/slices/slice_3.apk"
         type="SPLIT" />
+    <artifact
+        location="/home/pricek21/Desktop/FitFriend/app/build/outputs/apk/debug/app-debug.apk"
+        type="SPLIT_MAIN" />
 
     <build
         build-mode="FULL"
@@ -75,13 +90,19 @@
         timestamp="1518296342616"
         verifier="COLD_SWAP_REQUESTED" >
         <artifact
-            location="/home/pricek21/Desktop/FitFriend/app/build/intermediates/split-apk/debug/slices/slice_9.apk"
-            type="SPLIT" />
-        <artifact
             location="/home/pricek21/Desktop/FitFriend/app/build/intermediates/split-apk/debug/slices/slice_6.apk"
             type="SPLIT" />
+    </build>
+    <build
+        build-mode="COLD"
+        ir-eligibility="R_CLASS_CHANGE"
+        timestamp="1518297290109"
+        verifier="COLD_SWAP_REQUESTED" >
         <artifact
             location="/home/pricek21/Desktop/FitFriend/app/build/intermediates/split-apk/debug/slices/slice_5.apk"
+            type="SPLIT" />
+        <artifact
+            location="/home/pricek21/Desktop/FitFriend/app/build/intermediates/split-apk/debug/slices/slice_9.apk"
             type="SPLIT" />
         <artifact
             location="/home/pricek21/Desktop/FitFriend/app/build/intermediates/split-apk/debug/slices/slice_7.apk"
@@ -90,17 +111,11 @@
             location="/home/pricek21/Desktop/FitFriend/app/build/intermediates/split-apk/debug/slices/slice_4.apk"
             type="SPLIT" />
         <artifact
-            location="/home/pricek21/Desktop/FitFriend/app/build/outputs/apk/debug/app-debug.apk"
-            type="SPLIT_MAIN" />
-    </build>
-    <build
-        build-mode="COLD"
-        ir-eligibility="COMPATIBLE"
-        timestamp="1518296399980"
-        verifier="COLD_SWAP_REQUESTED" >
-        <artifact
             location="/home/pricek21/Desktop/FitFriend/app/build/intermediates/split-apk/debug/slices/slice_3.apk"
             type="SPLIT" />
+        <artifact
+            location="/home/pricek21/Desktop/FitFriend/app/build/outputs/apk/debug/app-debug.apk"
+            type="SPLIT_MAIN" />
     </build>
 
 </instant-run>

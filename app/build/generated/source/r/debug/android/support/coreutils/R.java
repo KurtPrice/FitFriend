@@ -73,7 +73,7 @@ public final class R {
         public static final int blocking = 0x7f070021;
         public static final int chronometer = 0x7f070029;
         public static final int forever = 0x7f070038;
-        public static final int icon = 0x7f07003c;
+        public static final int icon = 0x7f07003b;
         public static final int icon_group = 0x7f07003d;
         public static final int info = 0x7f070040;
         public static final int italic = 0x7f070041;
