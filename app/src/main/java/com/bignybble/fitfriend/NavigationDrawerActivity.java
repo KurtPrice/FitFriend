@@ -43,8 +43,11 @@ public class NavigationDrawerActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        GridView gridview = (GridView) findViewById(R.id.left_column_profile);
-        gridview.setAdapter(new ImageAdapter(this));
+        GridView lgridview = (GridView) findViewById(R.id.left_column_profile);
+        lgridview.setAdapter(new ImageAdapter(this));
+
+        GridView rgridview = (GridView) findViewById(R.id.left_column_profile);
+        lgridview.setAdapter(new ImageAdapter(this));
     }
 
     @Override
