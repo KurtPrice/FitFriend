@@ -1,5 +1,6 @@
 package com.bignybble.fitfriend;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -89,6 +90,8 @@ public class NavigationDrawerActivity extends AppCompatActivity
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
+            Intent matchesIntent = new Intent(this, MatchActivity.class);
+            startActivity(matchesIntent);
 
         } else if (id == R.id.nav_manage) {
 
