@@ -464,8 +464,17 @@
         "source": "/Users/Simon/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/103f5aecc344c5df69dcd86475e0a2fa/res/drawable-xhdpi-v4/abc_list_divider_mtrl_alpha.9.png"
     },
     {
+<<<<<<< HEAD
         "merged": "/Users/Simon/Desktop/FitFriend/app/build/intermediates/res/merged/debug/drawable-xhdpi-v4_notification_bg_normal.9.png.flat",
         "source": "/Users/Simon/.gradle/caches/transforms-1/files-1.1/support-compat-26.1.0.aar/4d9fa74c0dd8a0c3b2f2e4c5ce1a4ec7/res/drawable-xhdpi-v4/notification_bg_normal.9.png"
+=======
+        "merged": "/home/pricek21/Desktop/FitFriend/app/build/intermediates/res/merged/debug/layout_activity_match.xml.flat",
+        "source": "/home/pricek21/Desktop/FitFriend/app/src/main/res/layout/activity_match.xml"
+    },
+    {
+        "merged": "/home/pricek21/Desktop/FitFriend/app/build/intermediates/res/merged/debug/drawable-mdpi-v4_notification_bg_low_pressed.9.png.flat",
+        "source": "/home/pricek21/.gradle/caches/transforms-1/files-1.1/support-compat-26.1.0.aar/6e2c67a5b7de8f7aa4dfe9e32580997e/res/drawable-mdpi-v4/notification_bg_low_pressed.9.png"
+>>>>>>> android-ui
     },
     {
         "merged": "/Users/Simon/Desktop/FitFriend/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4_abc_btn_check_to_on_mtrl_015.png.flat",
@@ -580,8 +589,17 @@
         "source": "/Users/Simon/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/103f5aecc344c5df69dcd86475e0a2fa/res/drawable-xxhdpi-v4/abc_textfield_activated_mtrl_alpha.9.png"
     },
     {
+<<<<<<< HEAD
         "merged": "/Users/Simon/Desktop/FitFriend/app/build/intermediates/res/merged/debug/drawable-mdpi-v4_abc_ic_menu_copy_mtrl_am_alpha.png.flat",
         "source": "/Users/Simon/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/103f5aecc344c5df69dcd86475e0a2fa/res/drawable-mdpi-v4/abc_ic_menu_copy_mtrl_am_alpha.png"
+=======
+        "merged": "/home/pricek21/Desktop/FitFriend/app/build/intermediates/res/merged/debug/drawable_check.png.flat",
+        "source": "/home/pricek21/Desktop/FitFriend/app/src/main/res/drawable/check.png"
+    },
+    {
+        "merged": "/home/pricek21/Desktop/FitFriend/app/build/intermediates/res/merged/debug/drawable-mdpi-v4_abc_btn_radio_to_on_mtrl_015.png.flat",
+        "source": "/home/pricek21/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/f1702be20424cf3d24864e0a34794071/res/drawable-mdpi-v4/abc_btn_radio_to_on_mtrl_015.png"
+>>>>>>> android-ui
     },
     {
         "merged": "/Users/Simon/Desktop/FitFriend/app/build/intermediates/res/merged/debug/drawable-v21_design_bottom_navigation_item_background.xml.flat",
@@ -1428,8 +1446,17 @@
         "source": "/Users/Simon/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/103f5aecc344c5df69dcd86475e0a2fa/res/layout/abc_list_menu_item_checkbox.xml"
     },
     {
+<<<<<<< HEAD
         "merged": "/Users/Simon/Desktop/FitFriend/app/build/intermediates/res/merged/debug/drawable-xxhdpi-v4_abc_ic_star_black_16dp.png.flat",
         "source": "/Users/Simon/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/103f5aecc344c5df69dcd86475e0a2fa/res/drawable-xxhdpi-v4/abc_ic_star_black_16dp.png"
+=======
+        "merged": "/home/pricek21/Desktop/FitFriend/app/build/intermediates/res/merged/debug/drawable_x.png.flat",
+        "source": "/home/pricek21/Desktop/FitFriend/app/src/main/res/drawable/x.png"
+    },
+    {
+        "merged": "/home/pricek21/Desktop/FitFriend/app/build/intermediates/res/merged/debug/color-v23_abc_tint_seek_thumb.xml.flat",
+        "source": "/home/pricek21/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/f1702be20424cf3d24864e0a34794071/res/color-v23/abc_tint_seek_thumb.xml"
+>>>>>>> android-ui
     },
     {
         "merged": "/Users/Simon/Desktop/FitFriend/app/build/intermediates/res/merged/debug/drawable-xhdpi-v4_abc_ic_menu_copy_mtrl_am_alpha.png.flat",

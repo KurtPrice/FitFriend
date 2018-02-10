@@ -26,10 +26,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<<<<<<< HEAD
         <activity
             android:name="com.bignybble.fitfriend.NavigationDrawerActivity"
             android:label="@string/title_activity_navigation_drawer"
             android:theme="@style/AppTheme.NoActionBar" />
+=======
+        <activity android:name="com.bignybble.fitfriend.MatchActivity" />
+>>>>>>> android-ui
 
         <meta-data
             android:name="android.support.VERSION"
