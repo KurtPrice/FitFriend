@@ -30,7 +30,7 @@
         android:text="Password" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/loginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -45,11 +45,11 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/button"
-        android:layout_alignLeft="@+id/button"
+        android:layout_alignEnd="@+id/loginButton"
+        android:layout_alignLeft="@+id/loginButton"
         android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/button"
-        android:layout_alignStart="@+id/button"
+        android:layout_alignRight="@+id/loginButton"
+        android:layout_alignStart="@+id/loginButton"
         android:layout_marginBottom="14dp"
         android:text="Sign Up"
         android:textAlignment="center" />
