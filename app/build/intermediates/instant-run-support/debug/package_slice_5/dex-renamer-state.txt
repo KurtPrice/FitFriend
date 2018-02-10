@@ -1,4 +1,4 @@
-#Sat Feb 10 13:30:24 PST 2018
+#Sat Feb 10 14:12:15 PST 2018
 base.0=/home/pricek21/Desktop/FitFriend/app/build/intermediates/transforms/dexMerger/debug/5
 path.0=classes.dex
 renamed.0=classes.dex
