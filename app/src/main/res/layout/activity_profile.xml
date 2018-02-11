@@ -16,7 +16,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="400dp"
                     android:contentDescription="Profile Picture"
-                    app:srcCompat="@drawable/local_profile_pic" />
+                     />
 
                 <TextView
                     android:id="@+id/nameTextView"
@@ -27,7 +27,6 @@
                     android:layout_alignParentStart="true"
                     android:layout_marginBottom="26dp"
                     android:paddingLeft="10dp"
-                    android:text="Allan Turing"
                     android:textSize="24sp" />
 
                 <ImageView
