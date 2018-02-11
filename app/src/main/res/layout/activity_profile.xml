@@ -144,6 +144,17 @@
                     android:paddingLeft="10dp"
                     android:textSize="14dp" />
 
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/floatingActionButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/nameTextView"
+                    android:layout_marginBottom="23dp"
+                    android:layout_toEndOf="@+id/checkbox_Sat"
+                    android:clickable="true"
+                    android:onClick="launchEditProfileActivity"
+                    app:srcCompat="@drawable/ic_profile_edit" />
+
         </RelativeLayout>
     </ScrollView>
 
