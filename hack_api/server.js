@@ -1,6 +1,7 @@
 var express = require('express'),
+
     app = express(),
-    port = process.env.PORT || 3000,
+    port = process.env.PORT || 105,
     mongoose = require('mongoose'),
     User = require('./api/models/model'), //created model loading here
     bodyParser = require('body-parser'),
@@ -9,10 +10,11 @@ var express = require('express'),
     VerifyToken = require('./verify-token');
 
 // var config = require('../config'); // get config file
+
   
 // mongoose instance connection url connection
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/db'); 
+mongoose.connect('mongodb://localhost:3001/db'); 
 
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -82,5 +84,5 @@ console.log('Starting Server on ' + port);
 //     if (!user) return res.status(404).send("No user found.");
 //     res.status(200).send(user);
 //   });
-
 // });
+
