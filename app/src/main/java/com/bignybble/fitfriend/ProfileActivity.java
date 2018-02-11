@@ -130,8 +130,12 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void launchEditProfileActivity(View view) {
-        Intent intent = new Intent(this, EditProfileActivity.class);
-        startActivity(intent);
+
+        Intent startEdit = new Intent(this, EditProfileActivity.class);
+        startEdit.putExtra("name", userCard.name);
+
+
+        startActivity(startEdit);
     }
 
     /* Taken from the Android Developer blog at the following link. Used under

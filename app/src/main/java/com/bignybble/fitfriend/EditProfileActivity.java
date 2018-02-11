@@ -33,7 +33,7 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
         userName = getIntent().getExtras().getString("name");
-        mEmail = getIntent().getExtras().getString("email");
+        //mEmail = getIntent().getExtras().getString("email");
         //Toast.makeText(getApplicationContext(),"Hello :"+userName,Toast.LENGTH_LONG).show();
     }
 
