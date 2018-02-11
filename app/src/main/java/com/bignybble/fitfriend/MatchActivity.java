@@ -25,6 +25,7 @@ public class MatchActivity extends NavigationDrawerActivity implements View.OnCl
     private ArrayList<Card> cards;
     private int cardIndex = 0;
     private int cardSize;
+    private String results;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,10 +76,13 @@ public class MatchActivity extends NavigationDrawerActivity implements View.OnCl
         Toast toast;
 
         if(v.getId() == R.id.checkButton){
-            text = "Looks like fun!";
-            toast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
+            RestClient client = new RestClient();
+            String url = "http://64.188.52.115:105/users";
+            new RestClientTask().execute(url);
+            toast = Toast.makeText(context, results, Toast.LENGTH_SHORT);
             toast.show();
             loadCardToUI();
+
         } else{
             text = "Eh, not feeling it.";
             toast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
@@ -114,6 +118,15 @@ public class MatchActivity extends NavigationDrawerActivity implements View.OnCl
 
         protected void onPostExecute(Bitmap result) {
             bmImage.setImageBitmap(result);
+        }
+    }
+
+    private class RestClientTask extends AsyncTask<String, Void, Void> {
+
+        protected Void doInBackground(String... urls){
+            RestClient client = new RestClient();
+            results = client.makeRequest(urls[0]);
+            return null;
         }
     }
 }
