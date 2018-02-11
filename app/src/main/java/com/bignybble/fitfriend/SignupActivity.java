@@ -79,9 +79,11 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     public void launchEditProfileActivity(View view) {
         Intent intent = new Intent(this, EditProfileActivity.class);
         EditText etv = (EditText) findViewById(R.id.editTextName);
+        EditText etu = (EditText) findViewById(R.id.editTextEmail);
 
-        Toast.makeText(getApplicationContext(),"Hello :"+etv.getText(),Toast.LENGTH_LONG).show();
-        intent.putExtra("name",etv.getText());
+        //Toast.makeText(getApplicationContext(),"Hello :"+etv.getText(),Toast.LENGTH_LONG).show();
+        intent.putExtra("name",etv.getText().toString());
+        intent.putExtra("url",etu.getText().toString());
         startActivity(intent);
 >>>>>>> 9c18fd37713e0b4cebc5ec7ec0e1296014ba84cd
     }

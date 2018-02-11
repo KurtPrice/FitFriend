@@ -43,4 +43,12 @@ public class Card {
         this.uid = uid;
         this.bio = bio;
     }
+
+    public Card(String name, String URL, boolean[] schedule, char[] interests, String bio) {
+        this.name = name;
+        this.URL = URL;
+        this.schedule = schedule;
+        this.interests = interests;
+        this.bio = bio;
+    }
 }
