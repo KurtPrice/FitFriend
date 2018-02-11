@@ -7,6 +7,10 @@ var UserSchema = new Schema({
     type: String,
     required: 'Kindly enter the name of the User'
   },
+  password:{
+    type: String,
+    default: "Password123"
+  },
   email: {
     type: String,
     default: "NONE"
@@ -16,7 +20,7 @@ var UserSchema = new Schema({
     default: "EMPTY"
   },
   schedule: {
-    type: [Boolean],
+    type: [Number],
     default: [0, 0, 0, 0, 0, 0, 0]
   },
   token: {
@@ -41,6 +45,10 @@ var UserSchema = new Schema({
       enum: ['pending', 'ongoing', 'completed']
     }],
     default: ['pending']
+  },
+  image: {
+    type: String,
+    default: "https://i.imgur.com/rsD0RUq.jpg"
   }
 });
 
