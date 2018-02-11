@@ -1,3 +1,9 @@
+/**
+ * Authetication based 
+ * Original functions based off of Github repo and tutorial:
+ * https://medium.freecodecamp.org/securing-node-js-restful-apis-with-json-web-tokens-9f811a92bb52
+ */
+
 var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');
@@ -7,15 +13,15 @@ var VerifyToken = require('../../verify-token');
 var mongoose = require('mongoose'),
     UserDB = mongoose.model('Users'),
     MessageDB = mongoose.model('Messages');
-/**
- * Configure JWT
- * Github repo and tutorial source
- * https://medium.freecodecamp.org/securing-node-js-restful-apis-with-json-web-tokens-9f811a92bb52
- */
+
 var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 var bcrypt = require('bcryptjs');
 var config = require('../../config'); // get config file
 
+/* Register new user
+ * Requires body.{name, email, password}
+ * Returns session Token when a user is successfully created
+ */
 router.post('/register', function(req, res) {
   
   console.log("New User Request!");
@@ -29,7 +35,6 @@ router.post('/register', function(req, res) {
       name : req.body.name,
       email : req.body.email,
       password : hashedPassword
-      //schedule: JSON.parse(req.body.schedule)
     },
     function (err, user) {
       if (err) return res.status(500).send("There was a problem registering the user.")
@@ -42,8 +47,11 @@ router.post('/register', function(req, res) {
   });
 });
 
+/* Login user
+ * Requires body.{email, password}
+ * Returns authentication results and session Token
+ */
 router.post('/login', function(req, res) {
-
   console.log("Login Request!");
   UserDB.findOne({ email: req.body.email }, function (err, user) {
     if (err) return res.status(500).send('Error on the server.');
@@ -65,10 +73,12 @@ router.post('/login', function(req, res) {
 
 });
 
-router.get('/logout', function(req, res) {
-  res.status(200).send({ auth: false, token: null });
-});
 
+
+/* Request your own user data
+ * Requires headers.x-access-token
+ * Returns your user object
+ */
 router.get('/me', function(req, res, next) {
   
   console.log("Self Request!");
@@ -84,44 +94,17 @@ router.get('/me', function(req, res, next) {
       if (err) return res.status(500).send("There was a problem finding the user.");
       if (!user) return res.status(404).send("No user found.");
       
-      // res.status(200).send(user);
-      next(user);
+      res.status(200).send(user);
     });
   });
 });
 
-router.use(function (user, req, res, next) {
-  res.status(200).send(user);
-});
 
-//WTF is next()
-// router.get('/matching', function(req, res) {
-//   var token = req.headers['x-access-token'];
-//   if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
-  
-//   jwt.verify(token, config.secret, function(err, decoded) {
-//     if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
-    
-//     User.findById(decoded.id,
-//       { password: 0}, 
-//       function (err, user) {
-//       if (err) return res.status(500).send("There was a problem finding the user.");
-//       if (!user) return res.status(404).send("No user found.");
-      
-//       User.find({
-//           {
-//             matches: { $in: user.matches}
-//           }
-      
-//       }, function(err, userOther) {
-//         if (err)
-//           res.send(err);
-//         res.json(userOther);
-//       });
-//     });
-//   });
-// });
-
+/* Update user information
+ * Requires token appended to url request
+ * Updates fields provided in body.
+ * Returns your user object
+ */
 router.put('/update/:userId', function(req, res) {
   
   console.log("Update Request!");
@@ -149,6 +132,13 @@ router.put('/update/:userId', function(req, res) {
   });
 });
 
+
+/* Request a set of new users
+ * Requires header.x-access-token
+ * New users must have matching interests and schedule availability
+ * Once a user has been fetched, it will not be returned on subsequent requests
+ * Returns an array of users
+ */
 router.get('/cards', function(req, res) {
   var token = req.headers['x-access-token'];
   if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
@@ -215,7 +205,6 @@ router.get('/cards', function(req, res) {
           UserDB.findOneAndUpdate({_id: user._id}, {$push: { seen: {$each: others}}}, {returnNewDocument: false}, function(err, userNew) {
             if (err)
               res.send(err);
-            
           });
         } 
           
@@ -225,6 +214,11 @@ router.get('/cards', function(req, res) {
   });
 });
 
+/* Likes a user
+ * Requires token appended to url request and body.liked of type ._id
+ * Updates like 
+ * Returns your user object
+ */
 router.put('/like/:userId', function(req, res) {
   var token = req.params.userId;
   // req.body.mon = false
@@ -250,11 +244,17 @@ router.put('/like/:userId', function(req, res) {
         if (err) return res.status(500).send("There was a problem finding the user.");
 
 
+        
+        UserDB.findOneAndUpdate({_id: userLiked}, {$push: { likes: req.body.liked}}, {returnNewDocument: false}, function(err, userNew) {
+          if (err)
+            res.send(err);
+        });
+
         if (userLiked != null && userLiked.likes != null) {
           console.log("Found!");
           console.log(userLiked.likes);
           console.log(user._id);
-          if (userLiked.likes.includes(String(user._id))) {
+          if (user.likes.includes(String(userLiked._id))) {
             
             UserDB.findOneAndUpdate({_id: user._id}, {$push: { matches: req.body.liked}}, {returnNewDocument: false}, function(err, userNew) {
               if (err)
@@ -268,13 +268,10 @@ router.put('/like/:userId', function(req, res) {
             });
           }
         }
+
+        res.status(200).send("You liked user " + req.body.liked);
       });
 
-      UserDB.findOneAndUpdate({_id: user._id}, {$push: { likes: req.body.liked}}, {returnNewDocument: false}, function(err, userNew) {
-        if (err)
-          res.send(err);
-        res.status(200).send("Coolio it worked " + req.body.liked);
-      });
     });
   });
 });
