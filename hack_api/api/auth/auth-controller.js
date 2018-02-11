@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 var VerifyToken = require('../../verify-token');
 
 var mongoose = require('mongoose'),
-    User = mongoose.model('Users');
+    UserDB = mongoose.model('Users');
 /**
  * Configure JWT
  * Github repo and tutorial source
@@ -19,11 +19,11 @@ router.post('/register', function(req, res) {
   
   var hashedPassword = bcrypt.hashSync(req.body.password, 8);
   
-  User.findOne({ email: req.body.email }, function (err, user) {
+  UserDB.findOne({ email: req.body.email }, function (err, user) {
     if (err) return res.status(500).send('Error on the server.');
     if (user) return res.status(409).send('Email already registered!' + req.body.email);
 
-    User.create({
+    UserDB.create({
       name : req.body.name,
       email : req.body.email,
       password : hashedPassword
@@ -42,7 +42,7 @@ router.post('/register', function(req, res) {
 
 router.post('/login', function(req, res) {
 
-  User.findOne({ email: req.body.email }, function (err, user) {
+  UserDB.findOne({ email: req.body.email }, function (err, user) {
     if (err) return res.status(500).send('Error on the server.');
     if (!user) return res.status(404).send('No user found.');
     
@@ -73,7 +73,7 @@ router.get('/me', function(req, res, next) {
   jwt.verify(token, config.secret, function(err, decoded) {
     if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
     
-    User.findById(decoded.id,
+    UserDB.findById(decoded.id,
       { password: 0}, 
       function (err, user) {
       if (err) return res.status(500).send("There was a problem finding the user.");
@@ -121,20 +121,19 @@ router.put('/update/:userId', function(req, res) {
   var token = req.params.userId;
   // req.body.mon = false
   var stuff = req.body
-  req.body.seen = ["cool", "neat"];
   
   if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
   
   jwt.verify(token, config.secret, function(err, decoded) {
     if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
     
-    User.findById(decoded.id,
+    UserDB.findById(decoded.id,
       { password: 0}, 
       function (err, user) {
       if (err) return res.status(500).send("There was a problem finding the user.");
       if (!user) return res.status(404).send("No user found.");
       
-      User.findOneAndUpdate({_id: user._id}, req.body, {returnNewDocument: true}, function(err, userNew) {
+      UserDB.findOneAndUpdate({_id: user._id}, req.body, {returnNewDocument: true}, function(err, userNew) {
         if (err)
           res.send(err);
         res.json(userNew);
@@ -150,13 +149,13 @@ router.get('/cards', function(req, res) {
   jwt.verify(token, config.secret, function(err, decoded) {
     if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
     
-    User.findById(decoded.id,
+    UserDB.findById(decoded.id,
       { password: 0}, 
       function (err, user) {
       if (err) return res.status(500).send("There was a problem finding the user.");
       if (!user) return res.status(404).send("No user found.");
 
-      User.find({
+      UserDB.find({
         $and : [
           {
             $or : [ { 
@@ -206,7 +205,7 @@ router.get('/cards', function(req, res) {
             others.push(userOthers[i].email)
           }
 
-          User.findOneAndUpdate({_id: user._id}, {$push: { seen: {$each: others}}}, {returnNewDocument: false}, function(err, userNew) {
+          UserDB.findOneAndUpdate({_id: user._id}, {$push: { seen: {$each: others}}}, {returnNewDocument: false}, function(err, userNew) {
             if (err)
               res.send(err);
             
@@ -214,11 +213,60 @@ router.get('/cards', function(req, res) {
         } 
           
         res.json(userOthers);
-        
-        
-        
-
       }).limit(10);
+    });
+  });
+});
+
+router.put('/like/:userId', function(req, res) {
+  var token = req.params.userId;
+  // req.body.mon = false
+  var stuff = req.body
+  
+  if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
+  
+  jwt.verify(token, config.secret, function(err, decoded) {
+    if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+    
+    UserDB.findById(decoded.id,
+      { password: 0}, 
+      function (err, user) {
+      if (err) return res.status(500).send("There was a problem finding the user.");
+      if (!user) return res.status(404).send("No user found.");
+      
+      console.log("Liking");
+
+      UserDB.findById(req.body.liked,{ password: 0}, 
+        function (err, userLiked) {
+        if (err) return res.status(500).send("There was a problem finding the user.");
+
+        
+        console.log("Found!");
+        console.log(userLiked.likes);
+        console.log(user._id);
+        if (userLiked.likes.includes(String(user._id))) {
+          console.log("Damnit");
+          
+          UserDB.findOneAndUpdate({_id: user._id}, {$push: { matches: req.body.liked}}, {returnNewDocument: false}, function(err, userNew) {
+            if (err)
+              res.send(err);
+            console.log("YO WHAT UP");
+          });
+          
+          UserDB.findOneAndUpdate({_id: userLiked._id}, {$push: { matches: user._id}}, {returnNewDocument: false}, function(err, userNew) {
+            if (err)
+              res.send(err);
+            
+              console.log("EYYYYYYY");
+          });
+        }
+      });
+
+      UserDB.findOneAndUpdate({_id: user._id}, {$push: { likes: req.body.liked}}, {returnNewDocument: false}, function(err, userNew) {
+        if (err)
+          res.send(err);
+        res.status(200).send("Coolio it worked " + req.body.liked);
+      });
     });
   });
 });

@@ -70,6 +70,10 @@ var UserSchema = new Schema({
     type: String,
     default: "https://i.imgur.com/rsD0RUq.jpg"
   },
+  likes: {
+    type: [String],
+    default: ["none"]
+  },
   matches: {
     type: [String],
     default: ["none"]
