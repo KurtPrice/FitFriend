@@ -6,7 +6,6 @@ module.exports = function(app) {
     .get(api.list_all_users)
     .post(api.create_a_user);
 
-
   app.route('/users/:userId')
     .get(api.read_a_user)
     .put(api.update_a_user)
