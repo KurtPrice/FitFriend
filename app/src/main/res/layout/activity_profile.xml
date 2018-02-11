@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.bignybble.fitfriend.ProfileActivity">
+
+        <RelativeLayout
+            android:layout_height="match_parent"
+            android:layout_width="match_parent">
+
+                <ImageView
+                    android:id="@+id/profile_pic"
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp"
+                    android:contentDescription="Profile Picture"
+                    app:srcCompat="@drawable/local_profile_pic" />
+
+                <TextView
+                    android:id="@+id/nameTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/profile_pic"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginBottom="26dp"
+                    android:paddingLeft="10dp"
+                    android:text="Allan Turing"
+                    android:textSize="24sp" />
+
+                <ImageView
+                    android:id="@+id/iconImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_below="@+id/nameTextView"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    app:srcCompat="@android:color/holo_blue_bright" />
+
+
+                <CheckBox android:id="@+id/checkbox_Sun"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/iconImageView"
+                    android:text="Su"
+                    android:onClick="onCheckboxClicked"
+                    />
+
+                <CheckBox
+                    android:id="@+id/checkbox_Mon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/iconImageView"
+                    android:layout_toEndOf="@+id/checkbox_Sun"
+                    android:layout_toRightOf="@+id/checkbox_Sun"
+                    android:onClick="onCheckboxClicked"
+                    android:text="M" />
+
+                <CheckBox
+                    android:id="@+id/checkbox_Tue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/iconImageView"
+                    android:layout_toEndOf="@+id/checkbox_Mon"
+                    android:layout_toRightOf="@+id/checkbox_Mon"
+                    android:onClick="onCheckboxClicked"
+                    android:text="Tu" />
+
+                <CheckBox
+                    android:id="@+id/checkbox_Wed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/iconImageView"
+                    android:layout_toEndOf="@+id/checkbox_Tue"
+                    android:layout_toRightOf="@+id/checkbox_Tue"
+                    android:onClick="onCheckboxClicked"
+                    android:text="W" />
+                <CheckBox
+                    android:id="@+id/checkbox_Thu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/iconImageView"
+                    android:layout_toEndOf="@+id/checkbox_Wed"
+                    android:layout_toRightOf="@+id/checkbox_Wed"
+                    android:onClick="onCheckboxClicked"
+                    android:text="Th" />
+                <CheckBox
+                    android:id="@+id/checkbox_Fri"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/iconImageView"
+                    android:layout_toEndOf="@+id/checkbox_Thu"
+                    android:layout_toRightOf="@+id/checkbox_Thu"
+                    android:onClick="onCheckboxClicked"
+                    android:text="Fr" />
+                <CheckBox
+                    android:id="@+id/checkbox_Sat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/iconImageView"
+                    android:layout_toEndOf="@+id/checkbox_Fri"
+                    android:layout_toRightOf="@+id/checkbox_Fri"
+                    android:onClick="onCheckboxClicked"
+                    android:text="Sa" />
+
+                <TextView
+                    android:id="@+id/descriptionTextView"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/checkbox_Sun"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginBottom="26dp"
+                    android:paddingLeft="10dp"
+                    android:textSize="14dp" />
+
+        </RelativeLayout>
+    </ScrollView>
+
+
+
+
+
+

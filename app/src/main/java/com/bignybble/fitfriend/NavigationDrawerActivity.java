@@ -85,7 +85,9 @@ public class NavigationDrawerActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            // Handle the camera action
+            // Handle the profile action
+            Intent profileIntent = new Intent(this, ProfileActivity.class);
+            startActivity(profileIntent);
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
