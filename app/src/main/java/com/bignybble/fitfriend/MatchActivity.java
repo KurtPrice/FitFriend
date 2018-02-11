@@ -9,9 +9,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 
 public class MatchActivity extends NavigationDrawerActivity implements View.OnClickListener{
 
@@ -19,6 +21,10 @@ public class MatchActivity extends NavigationDrawerActivity implements View.OnCl
     private ImageView profileImageView;
     private ImageButton checkButton;
     private ImageButton rejectButton;
+    private TextView nameView;
+    private ArrayList<Card> cards;
+    private int cardIndex = 0;
+    private int cardSize;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,21 +36,39 @@ public class MatchActivity extends NavigationDrawerActivity implements View.OnCl
         profileImageView = findViewById(R.id.profileImageView);
         checkButton = findViewById(R.id.checkButton);
         rejectButton = findViewById(R.id.rejectButton);
+        nameView = findViewById(R.id.nameTextView);
 
-        /* Get image from URL and load as profile image */
-        new DownloadImageTask(profileImageView)
-                .execute("https://avatars2.githubusercontent.com" +
-                        "/u/1095875?s=400&u=99d416c0bf538e21fa827bb16617fa0e52a2fba0&v=4");
+        /* Get cards from server and load into app */
+        cards = Card.getCard();
+        cardSize = cards.size();
+        /* Load first cards data into UI */
+        loadCardToUI();
 
         /* Set images for our ImageButtons */
         checkButton.setImageResource(R.drawable.check);
         rejectButton.setImageResource(R.drawable.x);
+
+        /* Get interests of the user and present in image */
         iconImageView.setImageResource(R.drawable.ic_menu_camera);
 
 
         /* Set various listeners for our GUI components */
         checkButton.setOnClickListener(this);
         rejectButton.setOnClickListener(this);
+    }
+
+    /* Set user data on UI and increment cardIndex
+    * if we have depleted the number of cards, request more */
+    private void loadCardToUI(){
+        nameView.setText(cards.get(cardIndex).name);
+        new DownloadImageTask(profileImageView).execute(cards.get(cardIndex).URL);
+        if(cardIndex < cardSize - 1){
+            cardIndex++;
+        } else{
+            cardIndex = 0;
+            cards = Card.getCard();
+            cardSize = cards.size();
+        }
     }
 
     @Override
@@ -54,13 +78,15 @@ public class MatchActivity extends NavigationDrawerActivity implements View.OnCl
         Toast toast;
 
         if(v.getId() == R.id.checkButton){
-            text = "Ayy lmao";
+            text = "Looks like fun!";
             toast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
             toast.show();
+            loadCardToUI();
         } else{
-            text = "Ooo weee, he's trying!";
+            text = "Eh, not feeling it.";
             toast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
             toast.show();
+            loadCardToUI();
         }
     }
 
