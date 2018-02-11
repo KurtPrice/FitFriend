@@ -27,7 +27,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     public void launchNavigationBarActivity(View view) {
-        Intent intent = new Intent(this, NavigationDrawerActivity.class);
+        Intent intent = new Intent(this, MatchActivity.class);
         startActivity(intent);
     }
 }

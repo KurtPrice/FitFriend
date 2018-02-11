@@ -23,8 +23,8 @@ public class MatchActivity extends NavigationDrawerActivity implements View.OnCl
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match);
+        super.onCreate(savedInstanceState);
 
         /* Set up components on the UI for programmatic use --Kurtpr */
         iconImageView = findViewById(R.id.iconImageView);
