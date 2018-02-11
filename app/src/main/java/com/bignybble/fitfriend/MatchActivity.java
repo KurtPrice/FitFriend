@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import java.io.InputStream;
 
-public class MatchActivity extends AppCompatActivity implements View.OnClickListener{
+public class MatchActivity extends NavigationDrawerActivity implements View.OnClickListener{
 
     private ImageView iconImageView;
     private ImageView profileImageView;
@@ -23,8 +23,8 @@ public class MatchActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match);
+        super.onCreate(savedInstanceState);
 
         /* Set up components on the UI for programmatic use --Kurtpr */
         iconImageView = findViewById(R.id.iconImageView);
