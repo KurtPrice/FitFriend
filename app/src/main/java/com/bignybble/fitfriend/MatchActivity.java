@@ -56,7 +56,7 @@ public class MatchActivity extends NavigationDrawerActivity implements View.OnCl
         userToken = getIntent().getExtras().getString("token");
 
         /* Asynchronously get cards from server */
-        new RestClientTask().execute(USER_URL+userToken);
+        new RestClientTask().execute(USER_URL, "x-access-token", userToken);
     }
 
     /* Set user data on UI and increment cardIndex
@@ -79,7 +79,7 @@ public class MatchActivity extends NavigationDrawerActivity implements View.OnCl
 
             }
         } else{
-            new RestClientTask().execute(USER_URL+userToken);
+            new RestClientTask().execute(USER_URL, "x-access-token", userToken);
         }
     }
 
@@ -90,6 +90,11 @@ public class MatchActivity extends NavigationDrawerActivity implements View.OnCl
         Toast toast;
 
         if(v.getId() == R.id.checkButton){
+            /* Send notification that we like this user */
+            Card likedUser = cards.get(cardIndex);
+            new RestLikeTask().execute("http://bignybble.com:105/api/auth/like/"+userToken,
+                    "body.liked="+likedUser.uid);
+
             toast = Toast.makeText(context, "Looks like fun!", Toast.LENGTH_SHORT);
             toast.show();
             cardIndex++;
@@ -99,6 +104,7 @@ public class MatchActivity extends NavigationDrawerActivity implements View.OnCl
             text = "Eh, not feeling it.";
             toast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
             toast.show();
+            cardIndex++;
             loadCardToUI();
         }
     }
@@ -137,7 +143,7 @@ public class MatchActivity extends NavigationDrawerActivity implements View.OnCl
 
         protected String doInBackground(String... urls){
             RestClient client = new RestClient();
-            String results = client.makeRequest(urls[0]);
+            String results = client.makeGet(urls[0], urls[1], urls[2]);
             try {
                 return new JSONArray(results).toString();
             } catch(Exception ex){
@@ -156,6 +162,34 @@ public class MatchActivity extends NavigationDrawerActivity implements View.OnCl
             cardSize = cards.size();
             cardIndex = 0;
             loadCardToUI();
+        }
+    }
+
+    private class RestLikeTask extends AsyncTask<String, Void, String> {
+
+        protected String doInBackground(String... urls){
+            RestClient client = new RestClient();
+            String results = client.makePut(urls[0], urls[1]);
+            try {
+                return new JSONArray(results).toString();
+            } catch(Exception ex){
+                Log.d("DEBUG", "Could not get JSON, " + ex.getLocalizedMessage());
+            }
+            return "[]"; //We do not need to return, but need String to use onPostExecute below.
+        }
+
+        @Override
+        protected void onPostExecute(String result){
+            try {
+                cards = CardTools.getCards(new JSONArray(result));
+            } catch(Exception ex){
+                Log.d("FAIL", ex.getMessage());
+            }
+            cardSize = cards.size();
+            cardIndex = 0;
+            if(cardSize > 0) {
+                loadCardToUI();
+            }
         }
     }
 }

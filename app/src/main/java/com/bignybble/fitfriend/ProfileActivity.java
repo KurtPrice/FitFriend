@@ -14,6 +14,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.InputStream;
 
 public class ProfileActivity extends NavigationDrawerActivity {
@@ -35,6 +38,10 @@ public class ProfileActivity extends NavigationDrawerActivity {
                 new boolean[] {false, true, true, false, false, true, true}, new char[] {'s', 'f', 'g'}, "10", "I made computers");
         userCard.bio = "Hi I'm Allen and I'd love to go swmming with you some time. I like to go in the evenings around 9 pm. This is a lot of text to check if the scrolling works or not. We need more text. more and more text. more and more text. Ok maybe we're good now";
         loadUserAccount(userCard);
+
+        token = getIntent().getExtras().getString("token");
+        new RestClientTask().execute("http://bignybble.com:105/api/auth/me", "x-access-token", token);
+        Log.d("DEBUG", "LOADED PROFILE");
     }
 
     public void onCheckboxClicked(View view) {
@@ -138,8 +145,7 @@ public class ProfileActivity extends NavigationDrawerActivity {
     public void launchEditProfileActivity(View view) {
 
         Intent startEdit = new Intent(this, EditProfileActivity.class);
-        startEdit.putExtra("name", userCard.name);
-
+        startEdit.putExtra("token", token);
 
         startActivity(startEdit);
     }
@@ -171,6 +177,32 @@ public class ProfileActivity extends NavigationDrawerActivity {
 
         protected void onPostExecute(Bitmap result) {
             bmImage.setImageBitmap(result);
+        }
+    }
+
+    private class RestClientTask extends AsyncTask<String, Void, String> {
+
+        protected String doInBackground(String... urls){
+            RestClient client = new RestClient();
+            String results = client.makeGet(urls[0], urls[1], urls[2]);
+            try {
+                return results;
+            } catch(Exception ex){
+                Log.d("DEBUG", "Could not get JSON, " + ex.getLocalizedMessage());
+            }
+            return "[]"; //We do not need to return, but need String to use onPostExecute below.
+        }
+
+        @Override
+        protected void onPostExecute(String result){
+            try {
+                userCard = CardTools.cardFromJson(new JSONObject(result));
+                Log.d("USERCARD", "Card: " + userCard.name);
+                loadUserAccount(userCard);
+            } catch(Exception ex) {
+                Log.d("FAIL", ex.getMessage());
+            }
+
         }
     }
 }

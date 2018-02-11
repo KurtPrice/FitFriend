@@ -17,7 +17,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     private EditText passwordView;
     private EditText emailView;
     private Button signUpButton;
-
+    private String passedToken;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +35,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     private void startEditView(Card user){
         Intent startEdit = new Intent(this, EditProfileActivity.class);
         startEdit.putExtra("name", user.name);
+        startEdit.putExtra("token", passedToken);
         //startEdit.putExtra("email", emailView.getText().toString());
         startActivity(startEdit);
     }
@@ -66,6 +67,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
             try {
                 JSONObject json = new JSONObject(result);
                 Card userCard = CardTools.cardFromJson(json);
+                passedToken = (String )json.get("token");
                 startEditView(userCard);
             } catch (Exception ex) {
                 Log.d("DEBUG", "how?: " + ex.getMessage());

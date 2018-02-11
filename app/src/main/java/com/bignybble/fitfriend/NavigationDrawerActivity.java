@@ -24,8 +24,11 @@ public class NavigationDrawerActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        token = getIntent().getExtras().getString("token");
-
+        try {
+            token = getIntent().getExtras().getString("token");
+        } catch(Exception ex){
+            ex.printStackTrace();
+        }
         /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +98,7 @@ public class NavigationDrawerActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_slideshow) {
             Intent matchesIntent = new Intent(this, MatchActivity.class);
+            matchesIntent.putExtra("token", token);
             startActivity(matchesIntent);
 
         } else if (id == R.id.nav_manage) {

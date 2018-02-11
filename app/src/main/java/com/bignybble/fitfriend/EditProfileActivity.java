@@ -34,9 +34,11 @@ public class EditProfileActivity extends NavigationDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_edit_profile);
         super.onCreate(savedInstanceState);
-        userName = getIntent().getExtras().getString("name");
         //mEmail = getIntent().getExtras().getString("email");
         //Toast.makeText(getApplicationContext(),"Hello :"+userName,Toast.LENGTH_LONG).show();
+
+        String userToken = getIntent().getExtras().getString("token");
+        new RestClientTask().execute("http:bignybble.com:105/api/auth/me", "x-access-token", userToken);
     }
 
     public void onCheckboxClicked(View view) {
@@ -138,6 +140,23 @@ public class EditProfileActivity extends NavigationDrawerActivity {
         return schedule;
     }
 
+    public void setAvailability(boolean[] available)
+    {
+        String checkBoxId = "checkbox_";
+        boolean[] schedule = new boolean[7];
+        Toast.makeText(getApplicationContext(),"Hello :"+available.length,Toast.LENGTH_LONG).show();
+
+        for (int i=0; i<available.length; i++)
+        {
+            checkBoxId = checkBoxId + daysOfWeek[i];
+
+            CheckBox checkBox = (CheckBox)findViewById(getResources().getIdentifier(checkBoxId,"id", getPackageName()));
+            Toast.makeText(getApplicationContext(),"Hello :"+checkBox,Toast.LENGTH_LONG).show();
+            checkBox.setChecked(available[i]);
+            checkBoxId = "checkbox_";
+        }
+
+    }
     public char[] getInterests()
     {
         String checkBoxId = "checkbox_";
@@ -161,6 +180,53 @@ public class EditProfileActivity extends NavigationDrawerActivity {
         EditText editBio = (EditText) findViewById(getResources().getIdentifier(editTextBio,"id", getPackageName()));
 
         return  editBio.getText().toString();
+    }
+
+    public void loadInterests(char[] interests)
+    {
+        String activityImageId = "checkbox_";
+
+        String [] activityList = {"football","soccer","dumbell","swimming","running"};
+
+//        for (int i=0; i<activityList.length; i++)
+//        {
+//            ImageView placeholderView = findViewById(getResources().getIdentifier(activityImageId+activityList[i],"id", getPackageName()));
+//            placeholderView.setImageResource(R.drawable.ic_menu_placeholder);
+//        }
+        for (int i=0; i<interests.length; i++)
+        {
+
+            if(interests[i] == 'f'){
+                activityImageId =  activityImageId+"football";
+                //Toast.makeText(getApplicationContext(),"Hello:"+resrouceId,Toast.LENGTH_SHORT).show();
+            }
+
+            else if(interests[i] == 's'){
+                activityImageId =  activityImageId+"soccer";
+            }
+
+            else if(interests[i] == 'g'){
+                activityImageId =  activityImageId+"dumbell";
+                //Toast.makeText(getApplicationContext(),"Hello:"+resrouceId,Toast.LENGTH_SHORT).show();
+            }
+
+            else if(interests[i] == 'w'){
+                activityImageId =  activityImageId+"swimming";
+                //Toast.makeText(getApplicationContext(),"Hello:"+resrouceId,Toast.LENGTH_SHORT).show();
+            }
+
+            else if(interests[i] == 'r'){
+                activityImageId =  activityImageId+"running";
+                //Toast.makeText(getApplicationContext(),"Hello:"+resrouceId,Toast.LENGTH_SHORT).show();
+            }
+
+            CheckBox checkBox = findViewById(getResources().getIdentifier(activityImageId,"id", getPackageName()));
+            checkBox.setChecked(true);
+            //imageView.setImageResource(R.drawable.ic_menu_football);
+
+
+            activityImageId = "checkbox_";
+        }
     }
 
     public String getImageUrl()
@@ -189,8 +255,8 @@ public class EditProfileActivity extends NavigationDrawerActivity {
         }
 
 
-        new RestClientTask().execute("http://bignybble.com:105/api/auth/update"+super.token,
-                "name="+userName+"url="+getImageUrl()+"schedule="+getAvailability());
+        new RestClientTask().execute("http://bignybble.com:105/api/auth/update/"+super.token,
+                "name="+userName+"&url="+getImageUrl()+"&schedule="+getAvailability());
     }
 
     private void startProfileView(Card card)
@@ -204,9 +270,10 @@ public class EditProfileActivity extends NavigationDrawerActivity {
     }
     private class RestClientTask extends AsyncTask<String, Void, String> {
 
+
         protected String doInBackground(String... urls) {
             RestClient client = new RestClient();
-            return client.makePost(urls[0], urls[1]);
+            return client.makeGet(urls[0], urls[1], urls[2]);
         }
 
         @Override
@@ -214,7 +281,34 @@ public class EditProfileActivity extends NavigationDrawerActivity {
             try {
                 JSONObject json = new JSONObject(result);
                 Card userCard = CardTools.cardFromJson(json);
-                startProfileView(userCard);
+                //populate edit page with returned card info
+
+                Toast.makeText(getApplicationContext(),"Hello :"+userCard.schedule.length,Toast.LENGTH_LONG).show();
+                loadInterests(userCard.interests);
+
+
+                String checkBoxId = "checkbox_";
+                boolean[] schedule = new boolean[7];
+
+
+                for (int i=0; i<userCard.schedule.length; i++)
+                {
+                    checkBoxId = checkBoxId + daysOfWeek[i];
+
+                    CheckBox checkBox = (CheckBox)findViewById(getResources().getIdentifier(checkBoxId,"id", getPackageName()));
+                    Toast.makeText(getApplicationContext(),"Hello :"+checkBoxId,Toast.LENGTH_LONG).show();
+                    checkBox.setChecked(userCard.schedule[i]);
+                    checkBoxId = "checkbox_";
+                }
+
+
+
+                EditText editImageUrl = (EditText) findViewById(getResources().getIdentifier("textViewImageUrl","id", getPackageName()));
+                editImageUrl.setText(userCard.URL);
+
+                EditText editBio = (EditText) findViewById(getResources().getIdentifier("editTextBio","id", getPackageName()));
+                editBio.setText(userCard.bio);
+                //startProfileView(userCard);
             } catch (Exception ex) {
                 Log.d("DEBUG", "how?: " + ex.getMessage());
             }
