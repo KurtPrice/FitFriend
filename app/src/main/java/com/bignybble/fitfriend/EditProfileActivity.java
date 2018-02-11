@@ -8,11 +8,13 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -22,7 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.File;
 
-public class EditProfileActivity extends AppCompatActivity {
+public class EditProfileActivity extends NavigationDrawerActivity {
     private String userName;
     private String mEmail;
     private String[] daysOfWeek = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
@@ -30,11 +32,13 @@ public class EditProfileActivity extends AppCompatActivity {
     private char[] interestsList = {'f','s','w','g','r'};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
-        userName = getIntent().getExtras().getString("name");
-        mEmail = getIntent().getExtras().getString("email");
+        super.onCreate(savedInstanceState);
+        //mEmail = getIntent().getExtras().getString("email");
         //Toast.makeText(getApplicationContext(),"Hello :"+userName,Toast.LENGTH_LONG).show();
+
+        String userToken = getIntent().getExtras().getString("token");
+        new RestClientTask().execute("http:bignybble.com:105/api/auth/me", "x-access-token", userToken);
     }
 
     public void onCheckboxClicked(View view) {
@@ -135,6 +139,23 @@ public class EditProfileActivity extends AppCompatActivity {
         return schedule;
     }
 
+    public void setAvailability(boolean[] available)
+    {
+        String checkBoxId = "checkbox_";
+        boolean[] schedule = new boolean[7];
+        Toast.makeText(getApplicationContext(),"Hello :"+available.length,Toast.LENGTH_LONG).show();
+
+        for (int i=0; i<available.length; i++)
+        {
+            checkBoxId = checkBoxId + daysOfWeek[i];
+
+            CheckBox checkBox = (CheckBox)findViewById(getResources().getIdentifier(checkBoxId,"id", getPackageName()));
+            Toast.makeText(getApplicationContext(),"Hello :"+checkBox,Toast.LENGTH_LONG).show();
+            checkBox.setChecked(available[i]);
+            checkBoxId = "checkbox_";
+        }
+
+    }
     public char[] getInterests()
     {
         String checkBoxId = "checkbox_";
@@ -160,6 +181,53 @@ public class EditProfileActivity extends AppCompatActivity {
         return  editBio.getText().toString();
     }
 
+    public void loadInterests(char[] interests)
+    {
+        String activityImageId = "checkbox_";
+
+        String [] activityList = {"football","soccer","dumbell","swimming","running"};
+
+//        for (int i=0; i<activityList.length; i++)
+//        {
+//            ImageView placeholderView = findViewById(getResources().getIdentifier(activityImageId+activityList[i],"id", getPackageName()));
+//            placeholderView.setImageResource(R.drawable.ic_menu_placeholder);
+//        }
+        for (int i=0; i<interests.length; i++)
+        {
+
+            if(interests[i] == 'f'){
+                activityImageId =  activityImageId+"football";
+                //Toast.makeText(getApplicationContext(),"Hello:"+resrouceId,Toast.LENGTH_SHORT).show();
+            }
+
+            else if(interests[i] == 's'){
+                activityImageId =  activityImageId+"soccer";
+            }
+
+            else if(interests[i] == 'g'){
+                activityImageId =  activityImageId+"dumbell";
+                //Toast.makeText(getApplicationContext(),"Hello:"+resrouceId,Toast.LENGTH_SHORT).show();
+            }
+
+            else if(interests[i] == 'w'){
+                activityImageId =  activityImageId+"swimming";
+                //Toast.makeText(getApplicationContext(),"Hello:"+resrouceId,Toast.LENGTH_SHORT).show();
+            }
+
+            else if(interests[i] == 'r'){
+                activityImageId =  activityImageId+"running";
+                //Toast.makeText(getApplicationContext(),"Hello:"+resrouceId,Toast.LENGTH_SHORT).show();
+            }
+
+            CheckBox checkBox = findViewById(getResources().getIdentifier(activityImageId,"id", getPackageName()));
+            checkBox.setChecked(true);
+            //imageView.setImageResource(R.drawable.ic_menu_football);
+
+
+            activityImageId = "checkbox_";
+        }
+    }
+
     public String getImageUrl()
     {
         String imageUrl = "textViewImageUrl";
@@ -179,13 +247,70 @@ public class EditProfileActivity extends AppCompatActivity {
 
         try {
             char[] bool = (char[])json.get("interests");
-            Toast.makeText(getApplicationContext(),"Hello :"+bool[4],Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"Hello :"+card.name,Toast.LENGTH_LONG).show();
         }
         catch (JSONException e) {
             e.printStackTrace();
         }
+
+
+        new RestClientTask().execute("http://bignybble.com:105/api/auth/update/"+super.token,
+                "name="+userName+"&url="+getImageUrl()+"&schedule="+getAvailability());
     }
 
+    private void startProfileView(Card card)
+    {
+        Intent srartProfile = new Intent(this, ProfileActivity.class);
+        //srartProfile.putExtra("name", user.name);
+        //startEdit.putExtra("email", emailView.getText().toString());
+        startActivity(srartProfile);
+    }
     public void onInterestCheckboxClicked(View view) {
+    }
+    private class RestClientTask extends AsyncTask<String, Void, String> {
+
+
+        protected String doInBackground(String... urls) {
+            RestClient client = new RestClient();
+            return client.makeGet(urls[0], urls[1], urls[2]);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            try {
+                JSONObject json = new JSONObject(result);
+                Card userCard = CardTools.cardFromJson(json);
+                //populate edit page with returned card info
+
+                Toast.makeText(getApplicationContext(),"Hello :"+userCard.schedule.length,Toast.LENGTH_LONG).show();
+                loadInterests(userCard.interests);
+
+
+                String checkBoxId = "checkbox_";
+                boolean[] schedule = new boolean[7];
+
+
+                for (int i=0; i<userCard.schedule.length; i++)
+                {
+                    checkBoxId = checkBoxId + daysOfWeek[i];
+
+                    CheckBox checkBox = (CheckBox)findViewById(getResources().getIdentifier(checkBoxId,"id", getPackageName()));
+                    Toast.makeText(getApplicationContext(),"Hello :"+checkBoxId,Toast.LENGTH_LONG).show();
+                    checkBox.setChecked(userCard.schedule[i]);
+                    checkBoxId = "checkbox_";
+                }
+
+
+
+                EditText editImageUrl = (EditText) findViewById(getResources().getIdentifier("textViewImageUrl","id", getPackageName()));
+                editImageUrl.setText(userCard.URL);
+
+                EditText editBio = (EditText) findViewById(getResources().getIdentifier("editTextBio","id", getPackageName()));
+                editBio.setText(userCard.bio);
+                //startProfileView(userCard);
+            } catch (Exception ex) {
+                Log.d("DEBUG", "how?: " + ex.getMessage());
+            }
+        }
     }
 }

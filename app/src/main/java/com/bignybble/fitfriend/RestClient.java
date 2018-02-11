@@ -119,13 +119,16 @@ public class RestClient {
      * current user. --Kurtpr
      */
     public String makePut(String urls, String data){
+
         //Todo: URLEncode data
         try{
             URL url = new URL(urls);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
             urlConnection.setRequestMethod("PUT");
             urlConnection.setDoOutput(true);
             urlConnection.setRequestProperty("Content-Type", "x-www-form-urlencoded");
+
 
             /* Create output stream and write our data out */
             DataOutputStream outputStream = new DataOutputStream(urlConnection.getOutputStream());
@@ -133,13 +136,17 @@ public class RestClient {
             outputStream.flush();
             outputStream.close();
 
+
             urlConnection.getResponseCode();
 
+            int responseCode = urlConnection.getResponseCode();
+            Log.i("INFORM TOKEN", "Token: "+ urls);
 
-        } catch(MalformedURLException ex){
-            Log.d("DEBUG", "Make post: " + ex.getMessage());
-        } catch(IOException ex){
-            Log.d("DEBUG", "IOException: " + ex.getLocalizedMessage());
+
+
+        }catch (IOException e)
+        {
+            e.printStackTrace();
         }
         return null;
     }
