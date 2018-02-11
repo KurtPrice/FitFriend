@@ -25,6 +25,7 @@ public class Card {
     public boolean[] schedule;
     public char[] interests;
     public int uid;
+    public String bio;
 
     public Card(String name, String URL, boolean[] schedule, char[] interests, int uid){
         this.name = name;
