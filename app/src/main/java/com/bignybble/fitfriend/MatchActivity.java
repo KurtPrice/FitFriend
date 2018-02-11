@@ -46,9 +46,6 @@ public class MatchActivity extends NavigationDrawerActivity implements View.OnCl
         /* Get profiles for our user to read through */
         cardTool = new CardTools();
 
-        /* Get cards from server and load into app */
-        new RestClientTask().execute(USER_URL);
-
         /* Set images for our ImageButtons */
         checkButton.setImageResource(R.drawable.check);
         rejectButton.setImageResource(R.drawable.x);
@@ -58,19 +55,19 @@ public class MatchActivity extends NavigationDrawerActivity implements View.OnCl
         rejectButton.setOnClickListener(this);
 
         profileImageView.setImageResource(R.drawable.local_profile_pic);
+        /* Asynchronously get cards from server */
         new RestClientTask().execute(USER_URL);
     }
 
     /* Set user data on UI and increment cardIndex
     * if we have depleted the number of cards, request more */
     public void loadCardToUI(){
-        nameView.setText(cards.get(cardIndex).name);
-        new DownloadImageTask(profileImageView).execute(cards.get(cardIndex).URL);
         // Find our next card --Kurtpr
-        if(cardIndex < cardSize - 1){
-            cardIndex++;
+        if(cardIndex < cardSize){
+            nameView.setText(cards.get(cardIndex).name);
+            Log.d("DEBUG", "CardIndex: " + cardIndex);
+            new DownloadImageTask(profileImageView).execute(cards.get(cardIndex).URL);
         } else{
-            cardIndex = 0;
             new RestClientTask().execute(USER_URL);
         }
     }
@@ -82,16 +79,16 @@ public class MatchActivity extends NavigationDrawerActivity implements View.OnCl
         Toast toast;
 
         if(v.getId() == R.id.checkButton){
-            RestClient client = new RestClient();
-            toast = Toast.makeText(context, results, Toast.LENGTH_SHORT);
+            toast = Toast.makeText(context, "Looks like fun!", Toast.LENGTH_SHORT);
             toast.show();
-            new RestClientTask().execute(USER_URL);
+            cardIndex++;
+            loadCardToUI();
 
         } else{
             text = "Eh, not feeling it.";
             toast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
             toast.show();
-            new RestClientTask().execute(USER_URL);
+            loadCardToUI();
         }
     }
 
@@ -148,6 +145,7 @@ public class MatchActivity extends NavigationDrawerActivity implements View.OnCl
             }
             Log.d("DEBUG", "Size " + cards.get(1).schedule[0]);
             cardSize = cards.size();
+            cardIndex = 0;
             loadCardToUI();
         }
     }
