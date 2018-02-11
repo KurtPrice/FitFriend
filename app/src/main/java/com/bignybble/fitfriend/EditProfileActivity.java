@@ -8,11 +8,13 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -22,7 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.File;
 
-public class EditProfileActivity extends AppCompatActivity {
+public class EditProfileActivity extends NavigationDrawerActivity {
     private String userName;
     private String mEmail;
     private String[] daysOfWeek = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
@@ -30,8 +32,8 @@ public class EditProfileActivity extends AppCompatActivity {
     private char[] interestsList = {'f','s','w','g','r'};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
+        super.onCreate(savedInstanceState);
         userName = getIntent().getExtras().getString("name");
         //mEmail = getIntent().getExtras().getString("email");
         //Toast.makeText(getApplicationContext(),"Hello :"+userName,Toast.LENGTH_LONG).show();
@@ -185,8 +187,37 @@ public class EditProfileActivity extends AppCompatActivity {
         catch (JSONException e) {
             e.printStackTrace();
         }
+
+        new RestClientTask().execute("http://bignybble.com:105/api/auth/update",
+                "name="+"username"+"&email="+"email"
+                        +"&password="+"password");
     }
 
+    private void startProfileView(Card card)
+    {
+        Intent srartProfile = new Intent(this, ProfileActivity.class);
+        //srartProfile.putExtra("name", user.name);
+        //startEdit.putExtra("email", emailView.getText().toString());
+        startActivity(srartProfile);
+    }
     public void onInterestCheckboxClicked(View view) {
+    }
+    private class RestClientTask extends AsyncTask<String, Void, String> {
+
+        protected String doInBackground(String... urls) {
+            RestClient client = new RestClient();
+            return client.makePost(urls[0], urls[1]);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            try {
+                JSONObject json = new JSONObject(result);
+                Card userCard = CardTools.cardFromJson(json);
+                startProfileView(userCard);
+            } catch (Exception ex) {
+                Log.d("DEBUG", "how?: " + ex.getMessage());
+            }
+        }
     }
 }

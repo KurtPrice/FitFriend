@@ -35,7 +35,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     private void startEditView(Card user){
         Intent startEdit = new Intent(this, EditProfileActivity.class);
         startEdit.putExtra("name", user.name);
-        startEdit.putExtra("email", emailView.getText().toString());
+        //startEdit.putExtra("email", emailView.getText().toString());
         startActivity(startEdit);
     }
 

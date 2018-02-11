@@ -117,4 +117,42 @@ public class RestClient {
         }
         return "";
     }
+
+    public String makePut(String urls, String data){
+        try{
+            URL url = new URL(urls);
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestMethod("Put");
+            urlConnection.setDoOutput(true);
+
+            /* Create output stream and write our data out */
+            DataOutputStream outputStream = new DataOutputStream(urlConnection.getOutputStream());
+            outputStream.writeBytes(data);
+            outputStream.flush();
+            outputStream.close();
+
+            int responseCode = urlConnection.getResponseCode();
+
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(urlConnection.getInputStream()));
+
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+
+            //print result
+            return response.toString();
+            //Log.d("JSON RESULTS", response.toString());
+
+        } catch(MalformedURLException ex){
+            Log.d("DEBUG", "Make put: " + ex.getMessage());
+        } catch(IOException ex){
+            Log.d("DEBUG", "IOException: " + ex.getLocalizedMessage());
+        }
+        return null;
+    }
 }
