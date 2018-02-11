@@ -84,4 +84,24 @@ var UserSchema = new Schema({
   }
 });
 
-module.exports = mongoose.model('Users', UserSchema);
+var MessageSchema = new Schema({
+  name1: {
+    type: String,
+    required: 'Who is the first user?'
+  },
+  name2: {
+    type: String,
+    required: 'Whos is the second user?'
+  },
+  message: {
+    type: String,
+    required: 'WHAT WAS THE MESSAGE????'
+  },
+  date: {
+    type: Date,
+    default: Date.now
+  }
+});
+
+module.exports = [mongoose.model('Messages', MessageSchema),
+                  mongoose.model('Users', UserSchema)];

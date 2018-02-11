@@ -5,7 +5,8 @@ var bodyParser = require('body-parser');
 var VerifyToken = require('../../verify-token');
 
 var mongoose = require('mongoose'),
-    UserDB = mongoose.model('Users');
+    UserDB = mongoose.model('Users'),
+    MessageDB = mongoose.model('Messages');
 /**
  * Configure JWT
  * Github repo and tutorial source
@@ -231,6 +232,8 @@ router.put('/like/:userId', function(req, res) {
   var stuff = req.body
   
   if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
+
+  console.log("USER: " + token + " Liked USER")
   
   jwt.verify(token, config.secret, function(err, decoded) {
     if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
@@ -274,6 +277,88 @@ router.put('/like/:userId', function(req, res) {
         res.status(200).send("Coolio it worked " + req.body.liked);
       });
     });
+  });
+});
+
+router.post('/messages', function(req, res) {
+  var userOther = req.body['user2'];
+  var token = req.body['x-access-token'];
+  var message = req.body['message'];
+  if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
+  if (!userOther) return res.status(401).send({ auth: false, message: 'No user2 provided.'});
+  if (!message) return res.status(401).send({ auth: false, message: 'No message provided.'});
+  console.log("Message Post!");
+
+  jwt.verify(token, config.secret, function(err, decoded) {
+    if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+    
+    UserDB.findById(decoded.id,
+      { password: 0}, 
+      function (err, user) {
+      if (err) return res.status(500).send("There was a problem finding the user.");
+      if (!user) return res.status(404).send("No user found.");
+
+      MessageDB.create({
+        name1 : String(user._id),
+        name2 : String(userOther),
+        message : message
+        //schedule: JSON.parse(req.body.schedule)
+      },
+      function (err, user) {
+        if (err) return res.status(500).send("There was a problem creating the message");
+        // create a token
+        res.status(200).send("Message was recorded");
+      }); 
+
+
+    });
+  });
+})
+
+router.get('/messages', function(req, res) {
+  var userOther = req.headers['user2'];
+  var token = req.headers['x-access-token'];
+  if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
+  if (!userOther) return res.status(401).send({ auth: false, message: 'No user2 provided.'});
+  console.log("Message Request!");
+
+  jwt.verify(token, config.secret, function(err, decoded) {
+    if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+    
+    UserDB.findById(decoded.id,
+      { password: 0}, 
+      function (err, user) {
+      if (err) return res.status(500).send("There was a problem finding the user.");
+      if (!user) return res.status(404).send("No user found.");
+
+      console.log("Verified user!");
+      console.log("Other user: " + userOther)
+      console.log("Self user:" + user._id)
+      MessageDB.find({$and: [{name1: String(user._id)}, {name2: String(userOther)}]}).exec(function(err, messages) {
+        if (err) return res.status(500).send("There was a problem finding messages for user");
+        console.log(messages);
+        res.send(messages);
+      });
+    });
+  });
+});
+
+
+
+router.get('/lookup', function(req, res) {
+  var userOther = req.headers['user'];
+  if (!userOther) return res.status(401).send({ auth: false, message: 'No user provided.'});
+  console.log("Lookup Request!");
+
+  UserDB.findById(userOther,
+    { password: 0}, 
+    function (err, user) {
+    if (err) return res.status(500).send("There was a problem finding the user.");
+    if (!user) return res.status(404).send("No user found.");
+
+    console.log("Found other user!");
+    console.log("Other user: " + userOther)
+    res.send(user);
   });
 });
 
