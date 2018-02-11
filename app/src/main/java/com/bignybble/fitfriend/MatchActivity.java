@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -40,6 +39,7 @@ public class MatchActivity extends NavigationDrawerActivity implements View.OnCl
         /* Set images for our ImageButtons */
         checkButton.setImageResource(R.drawable.check);
         rejectButton.setImageResource(R.drawable.x);
+        iconImageView.setImageResource(R.drawable.ic_menu_camera);
 
 
         /* Set various listeners for our GUI components */
