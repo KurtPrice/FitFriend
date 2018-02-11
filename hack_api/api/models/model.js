@@ -20,7 +20,7 @@ var UserSchema = new Schema({
     default: "EMPTY"
   },
   schedule: {
-    type: [Number],
+    type: Array,
     default: [0, 0, 0, 0, 0, 0, 0]
   },
   // token: {

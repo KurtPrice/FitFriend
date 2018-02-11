@@ -27,7 +27,7 @@ router.post('/register', function(req, res) {
       name : req.body.name,
       email : req.body.email,
       password : hashedPassword,
-      schedule: req.body.schedule
+      schedule: JSON.parse(req.body.schedule)
     },
     function (err, user) {
       if (err) return res.status(500).send("There was a problem registering the user.")
