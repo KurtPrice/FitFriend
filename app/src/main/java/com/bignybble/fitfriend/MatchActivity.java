@@ -29,7 +29,7 @@ public class MatchActivity extends NavigationDrawerActivity implements View.OnCl
     private ArrayList<Card> cards;
     private int cardIndex = 0;
     private int cardSize;
-    private final String USER_URL = "http://bignybble.com:105/users";
+    private final String USER_URL = "http://bignybble.com:105/api/auth/cards/";
     private String[] daysOfWeek = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
 
     @Override
@@ -52,13 +52,11 @@ public class MatchActivity extends NavigationDrawerActivity implements View.OnCl
         checkButton.setOnClickListener(this);
         rejectButton.setOnClickListener(this);
 
-        profileImageView.setImageResource(R.drawable.local_profile_pic);
-
         /* Handle Any Extras */
         userToken = getIntent().getExtras().getString("token");
 
         /* Asynchronously get cards from server */
-        new RestClientTask().execute(USER_URL);
+        new RestClientTask().execute(USER_URL+userToken);
     }
 
     /* Set user data on UI and increment cardIndex
@@ -81,7 +79,7 @@ public class MatchActivity extends NavigationDrawerActivity implements View.OnCl
 
             }
         } else{
-            new RestClientTask().execute(USER_URL);
+            new RestClientTask().execute(USER_URL+userToken);
         }
     }
 
@@ -155,7 +153,6 @@ public class MatchActivity extends NavigationDrawerActivity implements View.OnCl
             } catch(Exception ex){
                 Log.d("FAIL", ex.getMessage());
             }
-            Log.d("DEBUG", "Size " + cards.get(1).schedule[0]);
             cardSize = cards.size();
             cardIndex = 0;
             loadCardToUI();
