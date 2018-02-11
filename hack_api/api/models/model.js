@@ -19,17 +19,37 @@ var UserSchema = new Schema({
     type: String,
     default: "EMPTY"
   },
-  schedule: {
-    type: Array,
-    default: [0, 0, 0, 0, 0, 0, 0]
+  mon: {
+    type: Boolean,
+    default: true
   },
-  // token: {
-  //   type: String,
-  //   default: "null"
-  // },
+  tue: {
+    type: Boolean,
+    default: true
+  },
+  wed: {
+    type: Boolean,
+    default: true
+  },
+  thu: {
+    type: Boolean,
+    default: true
+  },
+  fri: {
+    type: Boolean,
+    default: true
+  },
+  sat: {
+    type: Boolean,
+    default: true
+  },
+  sun: {
+    type: Boolean,
+    default: true
+  },
   interests: {
     type: Array,
-    default: []
+    default: ['F', 'S', 'J', 'W', 'G']
   },
   Created_date: {
     type: Date,
@@ -51,6 +71,10 @@ var UserSchema = new Schema({
     default: "https://i.imgur.com/rsD0RUq.jpg"
   },
   matches: {
+    type: [String],
+    default: []
+  },
+  seen: {
     type: [String],
     default: []
   }
