@@ -18,16 +18,9 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
-import android.util.Log;
-
-import com.bignybble.fitfriend.CardTools;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.File;
-import java.io.FileNotFoundException;
 
 public class EditProfileActivity extends AppCompatActivity {
     private String userName;
