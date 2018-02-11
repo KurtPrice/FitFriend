@@ -2,6 +2,7 @@ package com.bignybble.fitfriend;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -92,6 +93,9 @@ public class NavigationDrawerActivity extends AppCompatActivity
             profileIntent.putExtra("token", token);
             startActivity(profileIntent);
         } else if (id == R.id.nav_gallery) {
+            Intent messageIntent = new Intent(this, MessageActivity.class);
+            messageIntent.putExtra("token", token);
+            startActivity(messageIntent);
 
         } else if (id == R.id.nav_slideshow) {
             Intent matchesIntent = new Intent(this, MatchActivity.class);

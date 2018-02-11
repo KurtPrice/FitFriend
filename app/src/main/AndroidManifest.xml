@@ -27,7 +27,8 @@
         <activity android:name=".MatchActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".SignupActivity" />
-        <activity android:name=".EditProfileActivity"></activity>
+        <activity android:name=".EditProfileActivity" />
+        <activity android:name=".MessageActivity"></activity>
     </application>
 
 </manifest>

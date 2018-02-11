@@ -17,7 +17,7 @@ public class CardTools {
 
 
     /*
-    * This will get the default number of cards (25) from the server and
+    * This will get the default number of cards (10) from the server and
     * return them in an array list for use in MatchActivity
     */
     public static ArrayList<Card> getCards(JSONArray jsonArray){

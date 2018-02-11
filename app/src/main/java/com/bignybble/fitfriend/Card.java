@@ -33,7 +33,6 @@ public class Card {
     public char[] interests;
     public String uid;
     public String bio;
-    private JSONArray jsonCards;
 
     public Card(String name, String URL, boolean[] schedule, char[] interests, String uid, String bio) {
         this.name = name;

@@ -56,7 +56,6 @@ public class EditProfileActivity extends AppCompatActivity {
 
                 String filePath = getPath(selectedImage);
                 String file_extn = filePath.substring(filePath.lastIndexOf(".") + 1);
-                //image_name_tv.setText(filePath);
 
                 try {
                     if (file_extn.equals("img") || file_extn.equals("jpg") || file_extn.equals("jpeg") || file_extn.equals("gif") || file_extn.equals("png")) {

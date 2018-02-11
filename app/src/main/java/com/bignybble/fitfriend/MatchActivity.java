@@ -139,6 +139,9 @@ public class MatchActivity extends NavigationDrawerActivity implements View.OnCl
         }
     }
 
+    /* Used to make a GET request to the server backend and retrieve user
+     * information on accounts and other users. --Kurtpr
+     */
     private class RestClientTask extends AsyncTask<String, Void, String> {
 
         protected String doInBackground(String... urls){
@@ -152,6 +155,9 @@ public class MatchActivity extends NavigationDrawerActivity implements View.OnCl
             return "[]"; //We do not need to return, but need String to use onPostExecute below.
         }
 
+        /* Called after doInBackground finishes processing. Should be used to interact with UI
+        * that depends on having the data from doInBackground.
+        * */
         @Override
         protected void onPostExecute(String result){
             try {
@@ -165,6 +171,9 @@ public class MatchActivity extends NavigationDrawerActivity implements View.OnCl
         }
     }
 
+    /* Specially constructed for use in liking other users' cards.
+     * This will use the makePut method to update information. --Kurtpr
+     */
     private class RestLikeTask extends AsyncTask<String, Void, String> {
 
         protected String doInBackground(String... urls){
