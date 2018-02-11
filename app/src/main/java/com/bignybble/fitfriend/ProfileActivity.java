@@ -24,7 +24,7 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         userCard = new Card("Allen Turing", "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Alan_Turing_Aged_16.jpg/220px-Alan_Turing_Aged_16.jpg",
-                new boolean[] {false, true, true, false, false, true, true}, new char[] {'s', 'f', 'g'}, 10, "I made computers");
+                new boolean[] {false, true, true, false, false, true, true}, new char[] {'s', 'f', 'g'}, "10", "I made computers");
         userCard.bio = "Hi I'm Allen and I'd love to go swmming with you some time. I like to go in the evenings around 9 pm. This is a lot of text to check if the scrolling works or not. We need more text. more and more text. more and more text. Ok maybe we're good now";
         loadUserAccount(userCard);
     }

@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+
 import java.io.InputStream;
 import java.util.ArrayList;
 
@@ -26,6 +28,8 @@ public class MatchActivity extends NavigationDrawerActivity implements View.OnCl
     private int cardIndex = 0;
     private int cardSize;
     private String results;
+    private CardTools cardTool;
+    private final String USER_URL = "http://bignybble.com:105/users";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +43,11 @@ public class MatchActivity extends NavigationDrawerActivity implements View.OnCl
         rejectButton = findViewById(R.id.rejectButton);
         nameView = findViewById(R.id.nameTextView);
 
+        /* Get profiles for our user to read through */
+        cardTool = new CardTools();
+
         /* Get cards from server and load into app */
-        cards = Card.getCard();
-        cardSize = cards.size();
-        /* Load first cards data into UI */
-        loadCardToUI();
+        new RestClientTask().execute(USER_URL);
 
         /* Set images for our ImageButtons */
         checkButton.setImageResource(R.drawable.check);
@@ -52,11 +56,14 @@ public class MatchActivity extends NavigationDrawerActivity implements View.OnCl
         /* Set various listeners for our GUI components */
         checkButton.setOnClickListener(this);
         rejectButton.setOnClickListener(this);
+
+        profileImageView.setImageResource(R.drawable.local_profile_pic);
+        new RestClientTask().execute(USER_URL);
     }
 
     /* Set user data on UI and increment cardIndex
     * if we have depleted the number of cards, request more */
-    private void loadCardToUI(){
+    public void loadCardToUI(){
         nameView.setText(cards.get(cardIndex).name);
         new DownloadImageTask(profileImageView).execute(cards.get(cardIndex).URL);
         // Find our next card --Kurtpr
@@ -64,8 +71,7 @@ public class MatchActivity extends NavigationDrawerActivity implements View.OnCl
             cardIndex++;
         } else{
             cardIndex = 0;
-            cards = Card.getCard();
-            cardSize = cards.size();
+            new RestClientTask().execute(USER_URL);
         }
     }
 
@@ -77,17 +83,15 @@ public class MatchActivity extends NavigationDrawerActivity implements View.OnCl
 
         if(v.getId() == R.id.checkButton){
             RestClient client = new RestClient();
-            String url = "http://64.188.52.115:105/users";
-            new RestClientTask().execute(url);
             toast = Toast.makeText(context, results, Toast.LENGTH_SHORT);
             toast.show();
-            loadCardToUI();
+            new RestClientTask().execute(USER_URL);
 
         } else{
             text = "Eh, not feeling it.";
             toast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
             toast.show();
-            loadCardToUI();
+            new RestClientTask().execute(USER_URL);
         }
     }
 
@@ -121,12 +125,30 @@ public class MatchActivity extends NavigationDrawerActivity implements View.OnCl
         }
     }
 
-    private class RestClientTask extends AsyncTask<String, Void, Void> {
+    private class RestClientTask extends AsyncTask<String, Void, String> {
 
-        protected Void doInBackground(String... urls){
+        protected String doInBackground(String... urls){
             RestClient client = new RestClient();
-            results = client.makeRequest(urls[0]);
-            return null;
+            String results = client.makeRequest(urls[0]);
+            try {
+                Log.d("DEBUG", "WUT " + results);
+                return new JSONArray(results).toString();
+            } catch(Exception ex){
+                Log.d("DEBUG", "Could not get JSON, " + ex.getLocalizedMessage());
+            }
+            return "[]"; //We do not need to return, but need String to use onPostExecute below.
+        }
+
+        @Override
+        protected void onPostExecute(String result){
+            try {
+                cards = CardTools.getCards(new JSONArray(result));
+            } catch(Exception ex){
+                Log.d("FAIL", ex.getMessage());
+            }
+            Log.d("DEBUG", "Size " + cards.get(1).schedule[0]);
+            cardSize = cards.size();
+            loadCardToUI();
         }
     }
 }
