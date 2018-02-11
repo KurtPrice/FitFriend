@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import java.io.InputStream;
 
-public class MatchActivity extends AppCompatActivity implements View.OnClickListener{
+public class MatchActivity extends NavigationDrawerActivity implements View.OnClickListener{
 
     private ImageView iconImageView;
     private ImageView profileImageView;
