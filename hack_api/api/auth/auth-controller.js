@@ -8,6 +8,8 @@ var mongoose = require('mongoose'),
     User = mongoose.model('Users');
 /**
  * Configure JWT
+ * Github repo and tutorial source
+ * https://medium.freecodecamp.org/securing-node-js-restful-apis-with-json-web-tokens-9f811a92bb52
  */
 var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 var bcrypt = require('bcryptjs');
@@ -63,7 +65,7 @@ router.get('/logout', function(req, res) {
   res.status(200).send({ auth: false, token: null });
 });
 
-router.get('/me', function(req, res) {
+router.get('/me', function(req, res, next) {
   var token = req.headers['x-access-token'];
   if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
   
@@ -76,10 +78,14 @@ router.get('/me', function(req, res) {
       if (err) return res.status(500).send("There was a problem finding the user.");
       if (!user) return res.status(404).send("No user found.");
       
-      res.status(200).send(user);
+      // res.status(200).send(user);
+      next(user);
     });
   });
 });
 
+router.use(function (user, req, res, next) {
+  res.status(200).send(user);
+});
 
 module.exports = router;

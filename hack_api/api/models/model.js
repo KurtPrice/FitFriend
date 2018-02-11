@@ -23,10 +23,10 @@ var UserSchema = new Schema({
     type: [Number],
     default: [0, 0, 0, 0, 0, 0, 0]
   },
-  token: {
-    type: String,
-    default: "null"
-  },
+  // token: {
+  //   type: String,
+  //   default: "null"
+  // },
   interests: {
     type: Array,
     default: []
@@ -49,6 +49,10 @@ var UserSchema = new Schema({
   image: {
     type: String,
     default: "https://i.imgur.com/rsD0RUq.jpg"
+  },
+  matches: {
+    type: [String],
+    default: []
   }
 });
 
