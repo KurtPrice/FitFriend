@@ -247,22 +247,24 @@ router.put('/like/:userId', function(req, res) {
         function (err, userLiked) {
         if (err) return res.status(500).send("There was a problem finding the user.");
 
-        
-        console.log("Found!");
-        console.log(userLiked.likes);
-        console.log(user._id);
-        if (userLiked.likes.includes(String(user._id))) {
-          
-          UserDB.findOneAndUpdate({_id: user._id}, {$push: { matches: req.body.liked}}, {returnNewDocument: false}, function(err, userNew) {
-            if (err)
-              res.send(err);
-          });
-          
-          UserDB.findOneAndUpdate({_id: userLiked._id}, {$push: { matches: user._id}}, {returnNewDocument: false}, function(err, userNew) {
-            if (err)
-              res.send(err);
+
+        if (userLiked != null && userLiked.likes != null) {
+          console.log("Found!");
+          console.log(userLiked.likes);
+          console.log(user._id);
+          if (userLiked.likes.includes(String(user._id))) {
             
-          });
+            UserDB.findOneAndUpdate({_id: user._id}, {$push: { matches: req.body.liked}}, {returnNewDocument: false}, function(err, userNew) {
+              if (err)
+                res.send(err);
+            });
+            
+            UserDB.findOneAndUpdate({_id: userLiked._id}, {$push: { matches: user._id}}, {returnNewDocument: false}, function(err, userNew) {
+              if (err)
+                res.send(err);
+              
+            });
+          }
         }
       });
 
