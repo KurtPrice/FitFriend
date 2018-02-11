@@ -23,13 +23,78 @@
         android:id="@+id/nameTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/iconImageView"
+        android:layout_below="@+id/checkbox_Mon"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="26dp"
         android:paddingLeft="10dp"
         android:text="George Lucas"
         android:textSize="24sp" />
+
+    <CheckBox android:id="@+id/checkbox_Sun"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iconImageView"
+        android:text="Su"
+        android:clickable="false"
+        />
+
+    <CheckBox
+        android:id="@+id/checkbox_Mon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iconImageView"
+        android:layout_toEndOf="@+id/checkbox_Sun"
+        android:layout_toRightOf="@+id/checkbox_Sun"
+        android:clickable="false"
+        android:text="M" />
+
+    <CheckBox
+        android:id="@+id/checkbox_Tue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iconImageView"
+        android:layout_toEndOf="@+id/checkbox_Mon"
+        android:layout_toRightOf="@+id/checkbox_Mon"
+        android:clickable="false"
+        android:text="Tu" />
+
+    <CheckBox
+        android:id="@+id/checkbox_Wed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iconImageView"
+        android:layout_toEndOf="@+id/checkbox_Tue"
+        android:layout_toRightOf="@+id/checkbox_Tue"
+        android:clickable="false"
+        android:text="W" />
+    <CheckBox
+        android:id="@+id/checkbox_Thu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iconImageView"
+        android:layout_toEndOf="@+id/checkbox_Wed"
+        android:layout_toRightOf="@+id/checkbox_Wed"
+        android:clickable="false"
+        android:text="Th" />
+    <CheckBox
+        android:id="@+id/checkbox_Fri"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iconImageView"
+        android:layout_toEndOf="@+id/checkbox_Thu"
+        android:layout_toRightOf="@+id/checkbox_Thu"
+        android:clickable="false"
+        android:text="Fr" />
+    <CheckBox
+        android:id="@+id/checkbox_Sat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iconImageView"
+        android:layout_toEndOf="@+id/checkbox_Fri"
+        android:layout_toRightOf="@+id/checkbox_Fri"
+        android:clickable="false"
+        android:text="Sa" />
 
     <ImageButton
         android:id="@+id/rejectButton"

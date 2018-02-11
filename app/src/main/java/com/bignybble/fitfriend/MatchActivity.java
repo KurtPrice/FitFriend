@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -27,9 +28,8 @@ public class MatchActivity extends NavigationDrawerActivity implements View.OnCl
     private ArrayList<Card> cards;
     private int cardIndex = 0;
     private int cardSize;
-    private String results;
-    private CardTools cardTool;
     private final String USER_URL = "http://bignybble.com:105/users";
+    private String[] daysOfWeek = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +42,6 @@ public class MatchActivity extends NavigationDrawerActivity implements View.OnCl
         checkButton = findViewById(R.id.checkButton);
         rejectButton = findViewById(R.id.rejectButton);
         nameView = findViewById(R.id.nameTextView);
-
-        /* Get profiles for our user to read through */
-        cardTool = new CardTools();
 
         /* Set images for our ImageButtons */
         checkButton.setImageResource(R.drawable.check);
@@ -64,9 +61,20 @@ public class MatchActivity extends NavigationDrawerActivity implements View.OnCl
     public void loadCardToUI(){
         // Find our next card --Kurtpr
         if(cardIndex < cardSize){
-            nameView.setText(cards.get(cardIndex).name);
-            Log.d("DEBUG", "CardIndex: " + cardIndex);
-            new DownloadImageTask(profileImageView).execute(cards.get(cardIndex).URL);
+            Card card = cards.get(cardIndex);
+            nameView.setText(card.name);
+            new DownloadImageTask(profileImageView).execute(card.URL);
+
+            String checkBoxId = "checkbox_";
+            for(int i=0; i< card.schedule.length; i++)
+            {
+
+                checkBoxId = checkBoxId + daysOfWeek[i];
+                CheckBox checkBox = (CheckBox)findViewById(getResources().getIdentifier(checkBoxId,"id", getPackageName()));
+                checkBox.setChecked(card.schedule[i]);
+                checkBoxId = "checkbox_";
+
+            }
         } else{
             new RestClientTask().execute(USER_URL);
         }
@@ -128,7 +136,6 @@ public class MatchActivity extends NavigationDrawerActivity implements View.OnCl
             RestClient client = new RestClient();
             String results = client.makeRequest(urls[0]);
             try {
-                Log.d("DEBUG", "WUT " + results);
                 return new JSONArray(results).toString();
             } catch(Exception ex){
                 Log.d("DEBUG", "Could not get JSON, " + ex.getLocalizedMessage());

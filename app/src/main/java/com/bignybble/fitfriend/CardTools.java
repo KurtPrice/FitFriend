@@ -40,8 +40,16 @@ public class CardTools {
 
     public static Card cardFromJson(JSONObject json){
         try {
-            return new Card(json.getString("name"), json.getString("image"),
-                    getBooleans(json.getJSONArray("schedule")), getInterests(json.getJSONArray("interests")),
+            boolean[] schedule = new boolean[7];
+            schedule[0] = json.getBoolean("sun");
+            schedule[1] = json.getBoolean("mon");
+            schedule[2] = json.getBoolean("tue");
+            schedule[3] = json.getBoolean("wed");
+            schedule[4] = json.getBoolean("thu");
+            schedule[5] = json.getBoolean("fri");
+            schedule[6] = json.getBoolean("sat");
+            return new Card(json.getString("name"), json.getString("image"), schedule
+                    , getInterests(json.getJSONArray("interests")),
                     json.getString("_id"), json.getString("bio"));
 
         } catch(JSONException ex){
@@ -50,34 +58,16 @@ public class CardTools {
         }
     }
 
-    private static boolean[] getBooleans(JSONArray json){
-        boolean[] schedule = new boolean[7];
-        try {
-            for (int i = 0; i < 7; i++) {
-                int temp = json.getJSONObject(i).getInt("" + i);
-                if(temp == 0){
-                    schedule[i] = false;
-                } else{
-                    schedule[i] = true;
-                }
-            }
-            return schedule;
-        } catch(Exception ex){
-            Log.d("DEBUG", "Failed to parse array of bools");
-            return schedule;
-        }
-    }
-
     private static char[] getInterests(JSONArray json){
         char[] schedule = new char[7];
         try {
             for (int i = 0; i < 7; i++) {
-                String temp = json.getJSONObject(i).getString("" + i);
+                String temp = json.getString(i);
                 schedule[i] = temp.charAt(i);
             }
             return schedule;
         } catch(Exception ex){
-            Log.d("DEBUG", "Failed to parse array of bools");
+            Log.d("DEBUG", "Failed to parse array of chars");
             return schedule;
         }
     }
