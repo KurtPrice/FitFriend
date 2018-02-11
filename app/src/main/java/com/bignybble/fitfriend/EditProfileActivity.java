@@ -14,22 +14,34 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import android.util.Log;
+
+import com.bignybble.fitfriend.CardTools;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 
 public class EditProfileActivity extends AppCompatActivity {
     private String userName;
-
+    private String mEmail;
+    private String[] daysOfWeek = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+    // f-football, s-soccer, w-swimming, g-gym(weights), r-running.
+    private char[] interestsList = {'f','s','w','g','r'};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
         userName = getIntent().getExtras().getString("name");
-
-        //Toast.makeText(getApplicationContext(),"Hello :"+userName,Toast.LENGTH_LONG).show();
+        mEmail = getIntent().getExtras().getString("email");
+        Toast.makeText(getApplicationContext(),"Hello :"+userName,Toast.LENGTH_LONG).show();
     }
 
     public void onCheckboxClicked(View view) {
@@ -115,13 +127,72 @@ public class EditProfileActivity extends AppCompatActivity {
             );
         }
     }
+    public boolean[] getAvailability()
+    {
+        String checkBoxId = "checkbox_";
+        boolean[] schedule = new boolean[7];
 
+        for (int i=0; i<daysOfWeek.length; i++)
+        {
+            checkBoxId = checkBoxId + daysOfWeek[i];
+            CheckBox checkBox = (CheckBox)findViewById(getResources().getIdentifier(checkBoxId,"id", getPackageName()));
+            schedule[i] = checkBox.isChecked();
+
+            checkBoxId = "checkbox_";
+        }
+        return schedule;
+    }
+
+    public char[] getInterests()
+    {
+        String checkBoxId = "checkbox_";
+        char[] mInterests = new char[5];
+
+        for (int i=0; i<interestsList.length; i++)
+        {
+            checkBoxId = checkBoxId + interestsList[i];
+            CheckBox checkBox = (CheckBox)findViewById(getResources().getIdentifier(checkBoxId,"id", getPackageName()));
+            if(checkBox.isChecked())
+            {
+                mInterests[i] = interestsList[i];
+            }
+            checkBoxId = "checkbox_";
+        }
+        return mInterests;
+    }
+    public String getBio()
+    {
+        String editTextBio = "editTextBio";
+        EditText editBio = (EditText) findViewById(getResources().getIdentifier(editTextBio,"id", getPackageName()));
+
+        return  editBio.getText().toString();
+    }
+
+    public String getImageUrl()
+    {
+        String imageUrl = "textViewImageUrl";
+        EditText editImageUrl = (EditText) findViewById(getResources().getIdentifier(imageUrl,"id", getPackageName()));
+
+        return editImageUrl.getText().toString();
+    }
     /**
      * Package input into JSON and send to server.
      * @param view
      */
     public void saveChanges(View view) {
 
+        Card card = new Card(userName,getImageUrl(),getAvailability(),getInterests(),getBio());
+        CardTools cardTools = new CardTools();
+        JSONObject json = cardTools.jsonFromCard(card);
 
+        //try {
+            Toast.makeText(getApplicationContext(),"Hello :"+card.name,Toast.LENGTH_LONG).show();
+        //}
+//        catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+    }
+
+    public void onInterestCheckboxClicked(View view) {
     }
 }

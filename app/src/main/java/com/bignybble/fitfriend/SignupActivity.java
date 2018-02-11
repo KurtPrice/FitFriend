@@ -19,9 +19,11 @@ public class SignupActivity extends AppCompatActivity {
     public void launchEditProfileActivity(View view) {
         Intent intent = new Intent(this, EditProfileActivity.class);
         EditText etv = (EditText) findViewById(R.id.editTextName);
+        EditText etu = (EditText) findViewById(R.id.editTextEmail);
 
-        Toast.makeText(getApplicationContext(),"Hello :"+etv.getText(),Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(),"Hello :"+etv.getText(),Toast.LENGTH_LONG).show();
         intent.putExtra("name",etv.getText());
+        intent.putExtra("url",etu.getText());
         startActivity(intent);
     }
 }
