@@ -117,6 +117,32 @@ router.use(function (user, req, res, next) {
 //   });
 // });
 
+router.put('/update/:userId', function(req, res) {
+  var token = req.params.userId;
+  // req.body.mon = false
+  var stuff = req.body
+  req.body.seen = ["cool", "neat"];
+  
+  if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
+  
+  jwt.verify(token, config.secret, function(err, decoded) {
+    if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+    
+    User.findById(decoded.id,
+      { password: 0}, 
+      function (err, user) {
+      if (err) return res.status(500).send("There was a problem finding the user.");
+      if (!user) return res.status(404).send("No user found.");
+      
+      User.findOneAndUpdate({_id: user._id}, req.body, {returnNewDocument: true}, function(err, userNew) {
+        if (err)
+          res.send(err);
+        res.json(userNew);
+      });
+    });
+  });
+});
+
 router.get('/cards', function(req, res) {
   var token = req.headers['x-access-token'];
   if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
@@ -168,18 +194,29 @@ router.get('/cards', function(req, res) {
             interests: { $in: user.interests}
           },
           {
-            _id: { $nin: user.seen}
+            email: { $nin: user.seen}
           }
         ]
-      }, function(err, userOther) {
+      }, function(err, userOthers) {
         if (err)
           res.send(err);
-        res.json(userOther);
-        // Add to seen for user
-        User.update(
-          {_id: user._id}, 
-          {$push: {seen : userOther._id}}, 
-          done);
+        if (userOthers != null && userOthers.length > 0) {
+          var others = []
+          for (var i = 0;i<userOthers.length;i++){
+            others.push(userOthers[i].email)
+          }
+
+          User.findOneAndUpdate({_id: user._id}, {$push: { seen: {$each: others}}}, {returnNewDocument: false}, function(err, userNew) {
+            if (err)
+              res.send(err);
+            
+          });
+        } 
+          
+        res.json(userOthers);
+        
+        
+        
 
       }).limit(10);
     });

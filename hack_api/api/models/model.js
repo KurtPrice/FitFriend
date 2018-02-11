@@ -72,11 +72,11 @@ var UserSchema = new Schema({
   },
   matches: {
     type: [String],
-    default: []
+    default: ["none"]
   },
   seen: {
     type: [String],
-    default: []
+    default: ["nobody"]
   }
 });
 

@@ -17,7 +17,7 @@ mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:3001/db'); 
 
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 
