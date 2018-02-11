@@ -48,10 +48,6 @@ public class MatchActivity extends NavigationDrawerActivity implements View.OnCl
         checkButton.setImageResource(R.drawable.check);
         rejectButton.setImageResource(R.drawable.x);
 
-        /* Get interests of the user and present in image */
-        iconImageView.setImageResource(R.drawable.ic_menu_camera);
-
-
         /* Set various listeners for our GUI components */
         checkButton.setOnClickListener(this);
         rejectButton.setOnClickListener(this);
@@ -62,6 +58,7 @@ public class MatchActivity extends NavigationDrawerActivity implements View.OnCl
     private void loadCardToUI(){
         nameView.setText(cards.get(cardIndex).name);
         new DownloadImageTask(profileImageView).execute(cards.get(cardIndex).URL);
+        // Find our next card --Kurtpr
         if(cardIndex < cardSize - 1){
             cardIndex++;
         } else{
