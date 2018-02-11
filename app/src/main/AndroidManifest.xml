@@ -23,7 +23,9 @@
             android:label="@string/title_activity_navigation_drawer"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MatchActivity" />
-        <activity android:name=".ProfileActivity"></activity>
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".SignupActivity" />
+        <activity android:name=".EditProfileActivity"></activity>
     </application>
 
 </manifest>

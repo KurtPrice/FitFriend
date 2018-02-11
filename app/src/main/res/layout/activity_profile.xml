@@ -30,19 +30,47 @@
                     android:textSize="24sp" />
 
                 <ImageView
-                    android:id="@+id/iconImageView"
-                    android:layout_width="match_parent"
+                    android:id="@+id/activityImagesoccer"
+                    android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_below="@+id/nameTextView"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
+                    app:srcCompat="@android:color/holo_blue_bright" />
+                <ImageView
+                    android:id="@+id/activityImagerunning"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_below="@+id/nameTextView"
+                    android:layout_toRightOf="@id/activityImagesoccer"
+                    app:srcCompat="@android:color/holo_blue_bright" />
+                <ImageView
+                    android:id="@+id/activityImagedumbell"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_below="@+id/nameTextView"
+                    android:layout_toRightOf="@+id/activityImagerunning"
+                    app:srcCompat="@android:color/holo_blue_bright" />
+                <ImageView
+                    android:id="@+id/activityImagefootball"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_below="@+id/nameTextView"
+                    android:layout_toRightOf="@id/activityImagedumbell"
+                    app:srcCompat="@android:color/holo_blue_bright" />
+                <ImageView
+                    android:id="@+id/activityImageswimming"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_below="@+id/nameTextView"
+                    android:layout_toRightOf="@id/activityImagefootball"
                     app:srcCompat="@android:color/holo_blue_bright" />
 
 
                 <CheckBox android:id="@+id/checkbox_Sun"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/iconImageView"
+                    android:layout_below="@+id/activityImagesoccer"
                     android:text="Su"
                     android:onClick="onCheckboxClicked"
                     />
@@ -51,7 +79,7 @@
                     android:id="@+id/checkbox_Mon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/iconImageView"
+                    android:layout_below="@+id/activityImagesoccer"
                     android:layout_toEndOf="@+id/checkbox_Sun"
                     android:layout_toRightOf="@+id/checkbox_Sun"
                     android:onClick="onCheckboxClicked"
@@ -61,7 +89,7 @@
                     android:id="@+id/checkbox_Tue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/iconImageView"
+                    android:layout_below="@+id/activityImagesoccer"
                     android:layout_toEndOf="@+id/checkbox_Mon"
                     android:layout_toRightOf="@+id/checkbox_Mon"
                     android:onClick="onCheckboxClicked"
@@ -71,7 +99,7 @@
                     android:id="@+id/checkbox_Wed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/iconImageView"
+                    android:layout_below="@+id/activityImagesoccer"
                     android:layout_toEndOf="@+id/checkbox_Tue"
                     android:layout_toRightOf="@+id/checkbox_Tue"
                     android:onClick="onCheckboxClicked"
@@ -80,7 +108,7 @@
                     android:id="@+id/checkbox_Thu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/iconImageView"
+                    android:layout_below="@+id/activityImagesoccer"
                     android:layout_toEndOf="@+id/checkbox_Wed"
                     android:layout_toRightOf="@+id/checkbox_Wed"
                     android:onClick="onCheckboxClicked"
@@ -89,7 +117,7 @@
                     android:id="@+id/checkbox_Fri"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/iconImageView"
+                    android:layout_below="@+id/activityImagesoccer"
                     android:layout_toEndOf="@+id/checkbox_Thu"
                     android:layout_toRightOf="@+id/checkbox_Thu"
                     android:onClick="onCheckboxClicked"
@@ -98,7 +126,7 @@
                     android:id="@+id/checkbox_Sat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/iconImageView"
+                    android:layout_below="@+id/activityImagesoccer"
                     android:layout_toEndOf="@+id/checkbox_Fri"
                     android:layout_toRightOf="@+id/checkbox_Fri"
                     android:onClick="onCheckboxClicked"

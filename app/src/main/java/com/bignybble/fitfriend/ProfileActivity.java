@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.InputStream;
 
@@ -32,6 +33,11 @@ public class ProfileActivity extends AppCompatActivity {
     public void onCheckboxClicked(View view) {
 
     }
+
+    /**
+     * Method to set the text, url, bio fields of the user's profile page.
+     * @param card
+     */
     private void loadUserAccount(Card card)
     {
         TextView dtv = (TextView)findViewById(R.id.descriptionTextView);
@@ -43,18 +49,82 @@ public class ProfileActivity extends AppCompatActivity {
         ImageView profilePictureView = (ImageView)findViewById(R.id.profile_pic);
         new ProfileActivity.DownloadImageTask(profilePictureView).execute(card.URL);
         loadAvailability(card.schedule);
+        loadInterests(card.interests);
     }
 
+    /**
+     * Method to put a check mark on the user's avaiable days. Based on the array received via JSON object from server.
+     * @param availability
+     */
     private void loadAvailability(boolean[] availability)
     {
         String checkBoxId = "checkbox_";
         for(int i=0; i<availability.length; i++)
         {
-            if(availability[i])
-            {
-                checkBoxId = checkBoxId + daysOfWeek[0];
-                findViewById(getResources().getIdentifier(checkBoxId,"id", getPackageName()));
+
+            checkBoxId = checkBoxId + daysOfWeek[i];
+            CheckBox checkBox = (CheckBox)findViewById(getResources().getIdentifier(checkBoxId,"id", getPackageName()));
+            checkBox.setChecked(availability[i]);
+            checkBoxId = "checkbox_";
+
+        }
+    }
+
+    private void loadInterests(char[] interests)
+    {
+        String activityImageId = "activityImage";
+        String resrouceId = "ic_menu_";
+        String [] activityList = {"football","soccer","dumbell","swimming","running"};
+
+        for (int i=0; i<activityList.length; i++)
+        {
+            ImageView placeholderView = findViewById(getResources().getIdentifier(activityImageId+activityList[i],"id", getPackageName()));
+            placeholderView.setImageResource(R.drawable.ic_menu_placeholder);
+        }
+        for (int i=0; i<interests.length; i++)
+        {
+
+
+
+
+            if(interests[i] == 'f'){
+                activityImageId =  activityImageId+"football";
+                resrouceId = resrouceId+"football";
+                //Toast.makeText(getApplicationContext(),"Hello:"+resrouceId,Toast.LENGTH_SHORT).show();
             }
+
+            else if(interests[i] == 's'){
+                activityImageId =  activityImageId+"soccer";
+                resrouceId = resrouceId+"soccer";
+                Toast.makeText(getApplicationContext(),"Hello:"+resrouceId,Toast.LENGTH_SHORT).show();
+            }
+
+            else if(interests[i] == 'g'){
+                activityImageId =  activityImageId+"dumbell";
+                resrouceId = resrouceId+"dumbell";
+                //Toast.makeText(getApplicationContext(),"Hello:"+resrouceId,Toast.LENGTH_SHORT).show();
+            }
+
+            else if(interests[i] == 'w'){
+                activityImageId =  activityImageId+"swimming";
+                resrouceId = resrouceId+"swimming";
+                //Toast.makeText(getApplicationContext(),"Hello:"+resrouceId,Toast.LENGTH_SHORT).show();
+            }
+
+            else if(interests[i] == 'r'){
+                activityImageId =  activityImageId+"running";
+                resrouceId = resrouceId+"running";
+                //Toast.makeText(getApplicationContext(),"Hello:"+resrouceId,Toast.LENGTH_SHORT).show();
+            }
+
+           ImageView imageView = findViewById(getResources().getIdentifier(activityImageId,"id", getPackageName()));
+            int id = getResources().getIdentifier(resrouceId, "drawable", this.getPackageName());
+            imageView.setImageResource(id);
+            //imageView.setImageResource(R.drawable.ic_menu_football);
+
+
+            activityImageId = "activityImage";
+            resrouceId = "ic_menu_";
         }
     }
     /* Taken from the Android Developer blog at the following link. Used under
