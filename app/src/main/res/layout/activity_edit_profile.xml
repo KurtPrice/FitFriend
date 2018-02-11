@@ -1,9 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.bignybble.fitfriend.EditProfileActivity">
 
-</android.support.constraint.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/uploadProlfilePicture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        tools:layout_editor_absoluteX="148dp"
+        tools:layout_editor_absoluteY="104dp"
+        android:src="@drawable/ic_menu_upload_profile_pic"
+        />
+
+    <Button
+        android:id="@+id/buttonUploadProfilePicture"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/uploadProlfilePicture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Upload a profile picture"
+        android:onClick="launchImageSelector"/>
+
+    <TextView
+        android:id="@+id/textViewSeclectDays"
+        android:layout_below="@id/buttonUploadProfilePicture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24dp"
+        android:text="Please select fitness days."/>
+
+    <CheckBox android:id="@+id/checkbox_Sun"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewSeclectDays"
+        android:text="Su"
+        android:onClick="onCheckboxClicked"
+        />
+
+    <CheckBox
+        android:id="@+id/checkbox_Mon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewSeclectDays"
+        android:layout_toEndOf="@+id/checkbox_Sun"
+        android:layout_toRightOf="@+id/checkbox_Sun"
+        android:onClick="onCheckboxClicked"
+        android:text="M" />
+
+    <CheckBox
+        android:id="@+id/checkbox_Tue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewSeclectDays"
+        android:layout_toEndOf="@+id/checkbox_Mon"
+        android:layout_toRightOf="@+id/checkbox_Mon"
+        android:onClick="onCheckboxClicked"
+        android:text="Tu" />
+
+    <CheckBox
+        android:id="@+id/checkbox_Wed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewSeclectDays"
+        android:layout_toEndOf="@+id/checkbox_Tue"
+        android:layout_toRightOf="@+id/checkbox_Tue"
+        android:onClick="onCheckboxClicked"
+        android:text="W" />
+    <CheckBox
+        android:id="@+id/checkbox_Thu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewSeclectDays"
+        android:layout_toEndOf="@+id/checkbox_Wed"
+        android:layout_toRightOf="@+id/checkbox_Wed"
+        android:onClick="onCheckboxClicked"
+        android:text="Th" />
+    <CheckBox
+        android:id="@+id/checkbox_Fri"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewSeclectDays"
+        android:layout_toEndOf="@+id/checkbox_Thu"
+        android:layout_toRightOf="@+id/checkbox_Thu"
+        android:onClick="onCheckboxClicked"
+        android:text="Fr" />
+    <CheckBox
+        android:id="@+id/checkbox_Sat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewSeclectDays"
+        android:layout_toEndOf="@+id/checkbox_Fri"
+        android:layout_toRightOf="@+id/checkbox_Fri"
+        android:onClick="onCheckboxClicked"
+        android:text="Sa" />
+
+    <TextView
+        android:id="@+id/textViewBio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/checkbox_Sat"
+        android:textSize="24dp"
+        android:text="Bio:"/>
+
+    <EditText
+        android:id="@+id/editTextBio"
+        android:inputType="textMultiLine"
+        android:lines="8"
+        android:minLines="6"
+        android:gravity="top|left"
+        android:layout_below="@+id/textViewBio"
+        android:maxLines="10"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:scrollbars="vertical"
+        android:hint="Tell us a bit about yourself and your prefered fitness times"
+    />
+
+    <Button
+        android:id="@+id/buttonSaveChanges"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/editTextBio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:onClick="saveChanges"/>
+
+</RelativeLayout>
