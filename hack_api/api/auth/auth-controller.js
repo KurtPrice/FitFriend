@@ -17,6 +17,7 @@ var config = require('../../config'); // get config file
 
 router.post('/register', function(req, res) {
   
+  console.log("New User Request!");
   var hashedPassword = bcrypt.hashSync(req.body.password, 8);
   
   UserDB.findOne({ email: req.body.email }, function (err, user) {
@@ -42,6 +43,7 @@ router.post('/register', function(req, res) {
 
 router.post('/login', function(req, res) {
 
+  console.log("Login Request!");
   UserDB.findOne({ email: req.body.email }, function (err, user) {
     if (err) return res.status(500).send('Error on the server.');
     if (!user) return res.status(404).send('No user found.');
@@ -67,6 +69,8 @@ router.get('/logout', function(req, res) {
 });
 
 router.get('/me', function(req, res, next) {
+  
+  console.log("Self Request!");
   var token = req.headers['x-access-token'];
   if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
   
@@ -118,6 +122,8 @@ router.use(function (user, req, res, next) {
 // });
 
 router.put('/update/:userId', function(req, res) {
+  
+  console.log("Update Request!");
   var token = req.params.userId;
   // req.body.mon = false
   var stuff = req.body
@@ -146,6 +152,7 @@ router.get('/cards', function(req, res) {
   var token = req.headers['x-access-token'];
   if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
   
+  console.log("Card Request!");
   jwt.verify(token, config.secret, function(err, decoded) {
     if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
     
@@ -245,19 +252,16 @@ router.put('/like/:userId', function(req, res) {
         console.log(userLiked.likes);
         console.log(user._id);
         if (userLiked.likes.includes(String(user._id))) {
-          console.log("Damnit");
           
           UserDB.findOneAndUpdate({_id: user._id}, {$push: { matches: req.body.liked}}, {returnNewDocument: false}, function(err, userNew) {
             if (err)
               res.send(err);
-            console.log("YO WHAT UP");
           });
           
           UserDB.findOneAndUpdate({_id: userLiked._id}, {$push: { matches: user._id}}, {returnNewDocument: false}, function(err, userNew) {
             if (err)
               res.send(err);
             
-              console.log("EYYYYYYY");
           });
         }
       });
