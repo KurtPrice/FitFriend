@@ -15,7 +15,7 @@
         android:layout_marginTop="37dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Username" />
+        android:hint="username" />
 
     <EditText
         android:id="@+id/editText2"
@@ -27,7 +27,7 @@
         android:layout_marginTop="29dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Password" />
+        android:hint="password" />
 
     <Button
         android:id="@+id/loginButton"
