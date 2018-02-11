@@ -41,7 +41,7 @@ public class CardTools {
 
     public static Card cardFromJson(JSONObject json){
         try {
-            return new Card(json.getString("name"), "",
+            return new Card(json.getString("name"), json.getString("image"),
                     getBooleans(json.getJSONArray("schedule")), getInterests(json.getJSONArray("interests")),
                     json.getString("_id"), json.getString("bio"));
 
