@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.bignybble.fitfriend.NavigationDrawerActivity"
+    tools:showIn="@layout/app_bar_navigation_drawer">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout"
+        android:orientation="horizontal"
+        android:weightSum="3">
+        <GridView
+            android:id="@+id/left_column_profile"
+            android:columnWidth="100dp"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5">
+
+        </GridView>
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            
+            android:layout_weight="2"
+            android:contentDescription="Profile Picture"
+            app:srcCompat="@drawable/local_profile_pic" />
+
+        <GridView
+            android:id="@+id/right_column_profile"
+            android:columnWidth="100dp"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5">
+
+        </GridView>
+
+    </LinearLayout>
+
+
+</RelativeLayout>
