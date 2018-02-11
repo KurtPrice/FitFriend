@@ -85,6 +85,10 @@ router.get('/me', function(req, res, next) {
   });
 });
 
+router.use(function (user, req, res, next) {
+  res.status(200).send(user);
+});
+
 //WTF is next()
 // router.get('/matching', function(req, res) {
 //   var token = req.headers['x-access-token'];
@@ -127,9 +131,5 @@ router.get('/me', function(req, res, next) {
 //     });
 //   });
 // });
-
-router.use(function (user, req, res, next) {
-  res.status(200).send(user);
-});
 
 module.exports = router;

@@ -4,7 +4,7 @@
 var mongoose = require('mongoose'),
     user = mongoose.model('Users');
 
-exports.list_all_matching_users = function(req, res) {
+exports.list_all_users = function(req, res) {
   user.find({}, function(err, user) {
     if (err)
       res.send(err);
