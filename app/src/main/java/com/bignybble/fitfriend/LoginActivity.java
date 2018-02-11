@@ -9,6 +9,7 @@ import android.view.View;
 
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,6 +24,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button loginButton;
     private TextView usernameView;
     private TextView passwordView;
+    private String userToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,18 +36,18 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public void login(View v){
+    public void login(View v) {
         String username = usernameView.getText().toString();
         String password = passwordView.getText().toString();
-        Log.d("DEBUG", "USER INFO" + username);
-        Log.d("DEBUG", "PASS INFO" + password);
         new RestLoginTask().execute("http://bignybble.com:105/api/auth/login",
-                                    "email="+username+"&password="
-                                            +password);
+                "email=" + username + "&password="
+                        + password);
     }
 
     public void launchMatchActivity(Card user) {
         Intent startMatch = new Intent(this, MatchActivity.class);
+        startMatch.putExtra("token", userToken);
+        startMatch.putExtra("userUid", user.uid);
         startActivity(startMatch);
     }
 
@@ -55,31 +57,42 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    private class RestLoginTask extends  AsyncTask<String, Void, String> {
+    private class RestLoginTask extends AsyncTask<String, Void, String> {
 
-        protected String doInBackground(String... urls){
+        protected String doInBackground(String... urls) {
             RestClient client = new RestClient();
             String token = client.makePost(urls[0], urls[1]);
+            /* Check that the password was correct before proceeding */
+            if(token == null){
+                return "false";
+            }
+            /* Retrieve token and send it to the onPostExecute */
             try {
                 JSONObject json = new JSONObject(token);
                 token = json.getString("token");
-            } catch(JSONException ex){
+            } catch (JSONException ex) {
                 Log.d("ERROR", "THIS IS SAD");
             }
 
             String result = client.makeGet("http://bignybble.com:105/api/auth/me", "x-access-token", token);
             Log.d("RESULT", "Resulting in: " + result);
+            userToken = token;
             return result;
         }
 
         @Override
-        protected void onPostExecute(String result){
-            try {
-                JSONObject json = new JSONObject(result);
-                Card userCard = CardTools.cardFromJson(json);
-                launchMatchActivity(userCard);
-            } catch(Exception ex){
-                Log.d("DEBUG", "how?: " + ex.getMessage());
+        protected void onPostExecute(String result) {
+            /* Tell user if their creds were wrong, else login */
+            if (!result.equals("false")) {
+                try {
+                    JSONObject json = new JSONObject(result);
+                    Card userCard = CardTools.cardFromJson(json);
+                    launchMatchActivity(userCard);
+                } catch (Exception ex) {
+                    Log.d("DEBUG", "how?: " + ex.getMessage());
+                }
+            } else{
+                Toast.makeText(getApplicationContext(), "Wrong Credentials", Toast.LENGTH_SHORT).show();
             }
         }
     }

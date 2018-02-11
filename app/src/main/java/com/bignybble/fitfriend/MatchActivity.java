@@ -25,6 +25,7 @@ public class MatchActivity extends NavigationDrawerActivity implements View.OnCl
     private ImageButton checkButton;
     private ImageButton rejectButton;
     private TextView nameView;
+    private String userToken;
     private ArrayList<Card> cards;
     private int cardIndex = 0;
     private int cardSize;
@@ -52,6 +53,10 @@ public class MatchActivity extends NavigationDrawerActivity implements View.OnCl
         rejectButton.setOnClickListener(this);
 
         profileImageView.setImageResource(R.drawable.local_profile_pic);
+
+        /* Handle Any Extras */
+        userToken = getIntent().getExtras().getString("token");
+
         /* Asynchronously get cards from server */
         new RestClientTask().execute(USER_URL);
     }

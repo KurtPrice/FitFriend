@@ -17,12 +17,14 @@ import android.widget.GridView;
 
 public class NavigationDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        token = getIntent().getExtras().getString("token");
 
         /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -87,6 +89,7 @@ public class NavigationDrawerActivity extends AppCompatActivity
         if (id == R.id.nav_camera) {
             // Handle the profile action
             Intent profileIntent = new Intent(this, ProfileActivity.class);
+            profileIntent.putExtra("token", token);
             startActivity(profileIntent);
         } else if (id == R.id.nav_gallery) {
 
