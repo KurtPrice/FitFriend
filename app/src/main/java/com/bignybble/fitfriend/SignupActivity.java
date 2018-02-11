@@ -22,8 +22,8 @@ public class SignupActivity extends AppCompatActivity {
         EditText etu = (EditText) findViewById(R.id.editTextEmail);
 
         //Toast.makeText(getApplicationContext(),"Hello :"+etv.getText(),Toast.LENGTH_LONG).show();
-        intent.putExtra("name",etv.getText());
-        intent.putExtra("url",etu.getText());
+        intent.putExtra("name",etv.getText().toString());
+        intent.putExtra("url",etu.getText().toString());
         startActivity(intent);
     }
 }

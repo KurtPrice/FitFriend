@@ -41,7 +41,7 @@ public class EditProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_profile);
         userName = getIntent().getExtras().getString("name");
         mEmail = getIntent().getExtras().getString("email");
-        Toast.makeText(getApplicationContext(),"Hello :"+userName,Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(),"Hello :"+userName,Toast.LENGTH_LONG).show();
     }
 
     public void onCheckboxClicked(View view) {
@@ -185,12 +185,13 @@ public class EditProfileActivity extends AppCompatActivity {
         CardTools cardTools = new CardTools();
         JSONObject json = cardTools.jsonFromCard(card);
 
-        //try {
-            Toast.makeText(getApplicationContext(),"Hello :"+card.name,Toast.LENGTH_LONG).show();
-        //}
-//        catch (JSONException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            char[] bool = (char[])json.get("interests");
+            Toast.makeText(getApplicationContext(),"Hello :"+bool[4],Toast.LENGTH_LONG).show();
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public void onInterestCheckboxClicked(View view) {
