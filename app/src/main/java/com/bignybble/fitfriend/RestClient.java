@@ -32,8 +32,6 @@ public class RestClient {
             //urlConnection.setSSLSocketFactory(objTlsSocketFactory);
 
             int responseCode = urlConnection.getResponseCode();
-            System.out.println("\nSending 'GET' request to URL : " + url);
-            System.out.println("Response Code : " + responseCode);
 
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(urlConnection.getInputStream()));
@@ -49,7 +47,7 @@ public class RestClient {
             Log.d("JSON RESULTS", response.toString());
             return response.toString();
         } catch(Exception ex){
-            Log.d("URL", ex.getMessage());
+            Log.d("FUCK", ex.getMessage());
         }
         return "";
     }
