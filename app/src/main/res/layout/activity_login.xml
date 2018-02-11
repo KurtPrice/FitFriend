@@ -53,5 +53,7 @@
         android:layout_alignStart="@+id/loginButton"
         android:layout_marginBottom="14dp"
         android:text="Sign Up"
+        android:onClick="launchSignupActivity"
+        android:clickable="true"
         android:textAlignment="center" />
 </RelativeLayout>
