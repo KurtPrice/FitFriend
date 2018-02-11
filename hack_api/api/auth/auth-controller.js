@@ -1,5 +1,5 @@
 /**
- * Authetication based 
+ * Authors: Andy Brown and Dayne Andersen
  * Original functions based off of Github repo and tutorial:
  * https://medium.freecodecamp.org/securing-node-js-restful-apis-with-json-web-tokens-9f811a92bb52
  */
@@ -216,8 +216,8 @@ router.get('/cards', function(req, res) {
 
 /* Likes a user
  * Requires token appended to url request and body.liked of type ._id
- * Updates like 
- * Returns your user object
+ * Updates like on other user and adds matches if it was mutual.
+ * Returns a message on success
  */
 router.put('/like/:userId', function(req, res) {
   var token = req.params.userId;
@@ -276,6 +276,12 @@ router.put('/like/:userId', function(req, res) {
   });
 });
 
+
+/* Post a message
+ * Requires body.x-access-token, body.user2 of type ._id and plaintext body.message
+ * Adds a new message between poster and 2nd user
+ * Returns a message on success
+ */
 router.post('/messages', function(req, res) {
   var userOther = req.body['user2'];
   var token = req.body['x-access-token'];
@@ -298,11 +304,9 @@ router.post('/messages', function(req, res) {
         name1 : String(user._id),
         name2 : String(userOther),
         message : message
-        //schedule: JSON.parse(req.body.schedule)
       },
       function (err, user) {
         if (err) return res.status(500).send("There was a problem creating the message");
-        // create a token
         res.status(200).send("Message was recorded");
       }); 
 
@@ -311,6 +315,11 @@ router.post('/messages', function(req, res) {
   });
 })
 
+
+/* Request messages
+ * Requires body.x-access-token, body.user2 of type ._id 
+ * Returns an array of messages between requester and user2.
+ */
 router.get('/messages', function(req, res) {
   var userOther = req.headers['user2'];
   var token = req.headers['x-access-token'];
@@ -341,6 +350,10 @@ router.get('/messages', function(req, res) {
 
 
 
+/* Lookup
+ * Requires headers.user of type ._id
+ * Returns the given user object if it exists
+ */
 router.get('/lookup', function(req, res) {
   var userOther = req.headers['user'];
   if (!userOther) return res.status(401).send({ auth: false, message: 'No user provided.'});

@@ -1,5 +1,12 @@
+/**
+ * Authors: Andy Brown and Dayne Andersen
+ * Original functions based off of Github repo and tutorial:
+ * https://medium.freecodecamp.org/securing-node-js-restful-apis-with-json-web-tokens-9f811a92bb52
+ */
+
+
+
 var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
-// var config = require('../config'); // get our config file
 
 function verifyToken(req, res, next) {
 

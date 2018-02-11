@@ -1,3 +1,9 @@
+/**
+ * Authors: Andy Brown and Dayne Andersen
+ * Original functions based off of tutorial:
+ * https://www.codementor.io/olatundegaruba/nodejs-restful-apis-in-10-minutes-q0sgsfhbd
+ */
+
 'use strict';
 
 

@@ -1,3 +1,7 @@
+/**
+ * Authors: Andy Brown and Dayne Andersen
+ */
+
 'use strict';
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
