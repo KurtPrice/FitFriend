@@ -2,7 +2,7 @@
 
 
 var mongoose = require('mongoose'),
-  user = mongoose.model('Users');
+    user = mongoose.model('Users');
 
 exports.list_all_users = function(req, res) {
   user.find({}, function(err, user) {
@@ -11,9 +11,6 @@ exports.list_all_users = function(req, res) {
     res.json(user);
   });
 };
-
-
-
 
 exports.create_a_user = function(req, res) {
   var new_user = new user(req.body);
@@ -33,6 +30,15 @@ exports.read_a_user = function(req, res) {
   });
 };
 
+//INSERT SECURITY BELOW
+exports.user_login = function(req, res) {
+  user.findOne({'name': req.params.user, 'password': req.params.password}, 'name bio schedule key interests', function(err, user) {
+    if (err)
+      res.send(err);
+    res.json(user);
+  });
+};
+
 
 exports.update_a_user = function(req, res) {
   user.findOneAndUpdate({_id: req.params.userId}, req.body, {new: true}, function(err, user) {
@@ -44,8 +50,6 @@ exports.update_a_user = function(req, res) {
 
 
 exports.delete_a_user = function(req, res) {
-
-
   user.remove({
     _id: req.params.userId
   }, function(err, user) {

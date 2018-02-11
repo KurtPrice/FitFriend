@@ -11,5 +11,8 @@ module.exports = function(app) {
   app.route('/users/:userId')
     .get(api.read_a_user)
     .put(api.update_a_user)
-    .delete(api.delete_a_user);
+    // .delete(api.delete_a_user);
+
+  app.route('/users/login')
+    .get(api.user_login)
 };
