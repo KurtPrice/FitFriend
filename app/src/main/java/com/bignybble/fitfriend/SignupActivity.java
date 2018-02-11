@@ -6,7 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+<<<<<<< HEAD
 import android.widget.Button;
+=======
+>>>>>>> 9c18fd37713e0b4cebc5ec7ec0e1296014ba84cd
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,6 +52,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                                              +"&password="+password);
     }
 
+<<<<<<< HEAD
     @Override
     public void onClick(View v) {
         makeUser(v);
@@ -71,5 +75,14 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                 Log.d("DEBUG", "how?: " + ex.getMessage());
             }
         }
+=======
+    public void launchEditProfileActivity(View view) {
+        Intent intent = new Intent(this, EditProfileActivity.class);
+        EditText etv = (EditText) findViewById(R.id.editTextName);
+
+        Toast.makeText(getApplicationContext(),"Hello :"+etv.getText(),Toast.LENGTH_LONG).show();
+        intent.putExtra("name",etv.getText());
+        startActivity(intent);
+>>>>>>> 9c18fd37713e0b4cebc5ec7ec0e1296014ba84cd
     }
 }

@@ -1,5 +1,6 @@
 package com.bignybble.fitfriend;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -127,6 +128,12 @@ public class ProfileActivity extends AppCompatActivity {
             resrouceId = "ic_menu_";
         }
     }
+
+    public void launchEditProfileActivity(View view) {
+        Intent intent = new Intent(this, EditProfileActivity.class);
+        startActivity(intent);
+    }
+
     /* Taken from the Android Developer blog at the following link. Used under
      * the license of the author for open source use and development.
      * http://web.archive.org/web/20120804171902/http://developer.aiwgame.com:80/about-aiw
