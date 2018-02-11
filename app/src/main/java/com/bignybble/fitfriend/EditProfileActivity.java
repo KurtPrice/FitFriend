@@ -182,15 +182,15 @@ public class EditProfileActivity extends NavigationDrawerActivity {
 
         try {
             char[] bool = (char[])json.get("interests");
-            Toast.makeText(getApplicationContext(),"Hello :"+bool[4],Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"Hello :"+card.name,Toast.LENGTH_LONG).show();
         }
         catch (JSONException e) {
             e.printStackTrace();
         }
 
-        new RestClientTask().execute("http://bignybble.com:105/api/auth/update",
-                "name="+"username"+"&email="+"email"
-                        +"&password="+"password");
+
+        new RestClientTask().execute("http://bignybble.com:105/api/auth/update"+super.token,
+                "name="+userName+"url="+getImageUrl()+"schedule="+getAvailability());
     }
 
     private void startProfileView(Card card)

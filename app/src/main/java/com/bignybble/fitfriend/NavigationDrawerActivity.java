@@ -17,7 +17,7 @@ import android.widget.GridView;
 
 public class NavigationDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private String token;
+    protected String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
