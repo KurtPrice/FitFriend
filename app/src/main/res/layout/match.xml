@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     tools:context="com.bignybble.fitfriend.MatchActivity">
 
+    <io.saeid.fabloading.LoadingView
+        android:id="@+id/loading_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="167dp"
+        android:scaleX="1.5"
+        android:scaleY="1.5"
+        app:mfl_duration="400"
+        app:mfl_onclickLoading="true"
+        app:mfl_repeat="4" />
+
     <ImageView
         android:id="@+id/profileImageView"
         android:layout_width="match_parent"

@@ -3,6 +3,7 @@ package com.bignybble.fitfriend;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +19,8 @@ import org.json.JSONArray;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+import io.saeid.fabloading.LoadingView;
+
 public class MatchActivity extends NavigationDrawerActivity implements View.OnClickListener{
 
     private ImageView iconImageView;
@@ -26,6 +29,7 @@ public class MatchActivity extends NavigationDrawerActivity implements View.OnCl
     private ImageButton rejectButton;
     private TextView nameView;
     private String userToken;
+    private LoadingView mLoadingView;
     private ArrayList<Card> cards;
     private int cardIndex = 0;
     private int cardSize;
@@ -55,8 +59,43 @@ public class MatchActivity extends NavigationDrawerActivity implements View.OnCl
         /* Handle Any Extras */
         userToken = getIntent().getExtras().getString("token");
 
+        /* While we wait for cards to load present a loading bar */
+        mLoadingView = (LoadingView) findViewById(R.id.loading_view);
+        int marvel_1 = R.drawable.loading_1;
+        int marvel_2 = R.drawable.loading_2;
+        int marvel_3 = R.drawable.loading_3;
+        int marvel_4 = R.drawable.loading_4;
+        mLoadingView.addAnimation(Color.parseColor("#FFD200"), marvel_1,
+                LoadingView.FROM_LEFT);
+        mLoadingView.addAnimation(Color.parseColor("#2F5DA9"), marvel_2,
+                LoadingView.FROM_TOP);
+        mLoadingView.addAnimation(Color.parseColor("#FF4218"), marvel_3,
+                LoadingView.FROM_RIGHT);
+        mLoadingView.addAnimation(Color.parseColor("#C7E7FB"), marvel_4,
+                LoadingView.FROM_BOTTOM);
+
+        mLoadingView.addListener(new LoadingView.LoadingListener() {
+            @Override
+            public void onAnimationStart(int currentItemPosition) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(int nextItemPosition) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(int nextItemPosition) {
+
+            }
+        });
+
+
         /* Asynchronously get cards from server */
+        mLoadingView.startAnimation();
         new RestClientTask().execute(USER_URL, "x-access-token", userToken);
+        mLoadingView.setVisibility(View.GONE);
     }
 
     /* Set user data on UI and increment cardIndex
